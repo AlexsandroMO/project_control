@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}DataTables{% endblock %}
+{% block content %}
+<div class="content mt-3">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Data Table</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                <th id="width-col1"></th>
+                                <th>NOME DO PROJETO</th>
+                                <th>DISCIPLINA</th>
+                                <th>TIPO DE DOCUMENTO</th>
+                                <th>NOME DO DOCUMENTO</th>
+                                <th>CÓD. DOC.</th>
+                                <th>EXT. DOC.</th>
+                                <th>TIPO DE FOLHA</th>
+                                <th>QT. FOLHA</th>
+                                <th>QT. HH</th>
+                                <th>CUSTO DOC.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% csrf_token %}
+                                {% for cota in Cotations %}
+                                <tr>
+                                    <td class="action-checkbox"><input type="checkbox" name="_selected_action" value={{cota.id}} class="action-select"></td>
+                                    <!-- <th class="field-project_name"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></th> -->
+                                    <td><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></td>
+                                    <td>{{cota.subject_name}}</td>
+                                    <td>{{cota.doc_name_pattern}}</td>
+                                    <td>{{cota.doc_name}}</td>
+                                    <td>{{cota.cod_doc_type}}</td>
+                                    <td>{{cota.format_doc}}</td>
+                                    <td>{{cota.page_type}}</td>
+                                    <td>{{cota.qt_page}}</td>
+                                    <td>{{cota.qt_hh}}</td>
+                                    <td>{{cota.cost_doc}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
+{% endblock %}

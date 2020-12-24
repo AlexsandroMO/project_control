@@ -1,0 +1,17 @@
+LISTA_DOCUMENTOS,COD_DOC_TIPO,FORMATO,TIPO,,,
+Memorial Descritivo,1,1,4,MD,A4,.DOC / .PDF
+Critérios de Projeto,2,1,4,CP,A4,.DOC / .PDF
+Especificação Técnica,3,1,4,ET,A4,.DOC / .PDF
+Folha de Dados,4,2,4,FD,A4,.XLS / .PDF
+Topologia do Sietema,5,3,1,DG,A0,.DWG / .PDF
+Arranjo da Sala de Painéis,5,3,2,DG,A1,.DWG / .PDF
+Planta de Locação,6,3,2,DE,A1,.DWG / .PDF
+Planta de Encaminhamento de Cabos,6,3,2,DE,A1,.DWG / .PDF
+Diagrama Unifilar,6,3,3,DE,A3,.DWG / .PDF
+Diagrama de Interligação,6,3,3,DE,A3,.DWG / .PDF
+Detalhe Típico de Instalação,6,3,3,DE,A3,.DWG / .PDF
+Lista de Equipamentos,7,2,4,LE,A4,.XLS / .PDF
+Lista de Cabos,8,2,4,LC,A4,.XLS / .PDF
+Lista de Materiais,9,2,4,LM,A4,.XLS / .PDF
+Requisição de Materiais,10,1,4,RM,A4,.DOC / .PDF
+Planilha de Quantidades,11,2,4,PQ,A4,.XLS / .PDF

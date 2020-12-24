@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Siglas{% endblock %}
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+
+          <div class="card-header">
+            <h3 class="card-title">Lista de Siglas de Projeto</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+             <table id="example2" class="table table-bordered table-hover"> <!-- class="table table-bordered table-striped" -->
+              <thead>
+              <tr name="selected">
+                <th scope="col"  class="action-checkbox-column">
+                    <div class="text"><span><input type="checkbox" name="_selected" value="All" id="action-toggle"></span></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col"  class="column-__str__">
+                    <div class="text"><a href="X">SIGLA</a></div>
+                    <div class="clear"></div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+                {% csrf_token %}
+                {% for doc in docts %}
+                <tr>
+                    <td class="action-checkbox"><input type="checkbox" name="action" value="{{doc.id}}" class="action-select" id="selected">
+                    <td class="field-project_name"><a href="#">{{doc.name_doc}}</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <div class="row"><div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Mostrando {{ docts.number }} de {{ docts.paginator.num_pages }} Listas</div>
+            </div>
+            
+            <div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                <ul class="pagination">
+                    {% if docts.has_previous %}
+                      <li class="paginate_button page-item previous" id="example1_previous"><a href="?page={{ docts.previous_page_number }}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                      <li class="paginate_button page-item next disabled" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+                      {% endif %}
+     
+                    {% if docts.has_next %}
+                      <li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                      <li class="paginate_button page-item next" id="example1_next"><a href="?page={{ docts.next_page_number }}" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

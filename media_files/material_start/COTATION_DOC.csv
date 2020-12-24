@@ -1,0 +1,33 @@
+PROJETO,DISCIPLINA,COD_DOC_TIPO,TIPO_FOLHA,QT_FOLHA,QT_DOC,QT_HH,CUSTO_DOC
+Projeto Porto Novo,TELECOM,MD,A4,30,1,30," $3,000.00 "
+Projeto Porto Novo,TELECOM,CP,A4,30,1,30," $3,000.00 "
+Projeto Porto Novo,TELECOM,ET,A4,10,1,30," $1,000.00 "
+Projeto Porto Novo,TELECOM,FD,A4,5,5,25," $2,500.00 "
+Projeto Porto Novo,TELECOM,DG,A0,1,1,8, $100.00 
+Projeto Porto Novo,TELECOM,DE,A1,1,1,16, $100.00 
+Projeto Porto Novo,TELECOM,DE,A1,1,4,8, $400.00 
+Projeto Porto Novo,TELECOM,DG,A1,1,6,10, $600.00 
+Projeto Porto Novo,TELECOM,DG,A1,15,1,16," $1,500.00 "
+Projeto Porto Novo,TELECOM,DG,A1,15,1,20," $1,500.00 "
+Projeto Porto Novo,TELECOM,DE,A3,10,1,20," $1,000.00 "
+Projeto Porto Novo,TELECOM,LE,A4,8,1,15, $800.00 
+Projeto Porto Novo,TELECOM,LC,A4,8,1,15, $800.00 
+Projeto Porto Novo,TELECOM,LM,A4,8,1,15, $800.00 
+Projeto Porto Novo,TELECOM,RM,A4,8,1,15, $800.00 
+Projeto Porto Novo,TELECOM,PQ,A4,8,1,15, $800.00 
+Projeto Porto Novo,CFTV,MD,A4,30,1,30," $3,000.00 "
+Projeto Porto Novo,CFTV,CP,A4,30,1,30," $3,000.00 "
+Projeto Porto Novo,CFTV,ET,A4,10,1,30," $1,000.00 "
+Projeto Porto Novo,CFTV,FD,A4,5,5,25," $2,500.00 "
+Projeto Porto Novo,CFTV,DG,A0,1,1,8, $100.00 
+Projeto Porto Novo,CFTV,DE,A1,1,1,16, $100.00 
+Projeto Porto Novo,CFTV,DE,A1,1,4,8, $400.00 
+Projeto Porto Novo,CFTV,DG,A1,1,6,10, $600.00 
+Projeto Porto Novo,CFTV,DG,A1,15,1,16," $1,500.00 "
+Projeto Porto Novo,CFTV,DG,A1,15,1,20," $1,500.00 "
+Projeto Porto Novo,CFTV,DE,A3,10,1,20," $1,000.00 "
+Projeto Porto Novo,CFTV,LE,A4,8,1,15, $800.00 
+Projeto Porto Novo,CFTV,LC,A4,8,1,15, $800.00 
+Projeto Porto Novo,CFTV,LM,A4,8,1,15, $800.00 
+Projeto Porto Novo,CFTV,RM,A4,8,1,15, $800.00 
+Projeto Porto Novo,CFTV,PQ,A4,8,1,15, $800.00 

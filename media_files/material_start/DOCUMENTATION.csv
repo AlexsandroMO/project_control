@@ -1,0 +1,17 @@
+PROJETO,DISCIPLINA,DOCUMENTO,COD_DOC_TIPO,NUMERO_DOCUMENTO,ACAO
+Projeto Porto Novo,TELECOM,Memorial Descritivo,MD,PPN-TEL-1000-MD-001,Start
+Projeto Porto Novo,TELECOM,Critérios de Projeto,CP,PPN-TEL-1000-CP-001,-
+Projeto Porto Novo,TELECOM,Especificação Técnica,ET,PPN-TEL-1000-ET-001,-
+Projeto Porto Novo,TELECOM,Folha de Dados,FD,PPN-TEL-1000-FD-001,Start
+Projeto Porto Novo,TELECOM,Topologia do Sietema,DG,PPN-TEL-1000-DG-001,Start
+Projeto Porto Novo,TELECOM,Arranjo da Sala de Painéis,DE,PPN-TEL-1000-DE-001,Start
+Projeto Porto Novo,TELECOM,Planta de Locação,DE,PPN-TEL-1000-DE-001,Start
+Projeto Porto Novo,TELECOM,Planta de Encaminhamento de Cabos,DG,PPN-TEL-1000-DG-001,-
+Projeto Porto Novo,TELECOM,Diagrama Unifilar,DG,PPN-TEL-1000-DG-001,-
+Projeto Porto Novo,TELECOM,Diagrama de Interligação,DG,PPN-TEL-1000-DG-001,-
+Projeto Porto Novo,TELECOM,Detalhe Típico de Instalação,DE,PPN-TEL-1000-DE-001,Start
+Projeto Porto Novo,TELECOM,Lista de Equipamentos,LE,PPN-TEL-1000-LE-001,Start
+Projeto Porto Novo,TELECOM,Lista de Cabos,LC,PPN-TEL-1000-LC-001,Start
+Projeto Porto Novo,TELECOM,Lista de Materiais,LM,PPN-TEL-1000-LM-001,-
+Projeto Porto Novo,TELECOM,Requisição de Materiais,RM,PPN-TEL-1000-RM-001,Start
+Projeto Porto Novo,TELECOM,Planilha de Quantidades,PQ,PPN-TEL-1000-PQ-001,Start

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Tipo de Folha{% endblock %}
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+
+          <div class="card-header">
+            <h3 class="card-title">Lista de Tipos de Folhas</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+             <table id="example2" class="table table-bordered table-hover"> <!-- class="table table-bordered table-striped" -->
+              <thead>
+              <tr name="selected">
+                <th scope="col"  class="action-checkbox-column">
+                    <div class="text"><span><input type="checkbox" name="_selected" value="All" id="action-toggle"></span></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col"  class="column-__str__">
+                    <div class="text"><a href="X">TIPO DE FOLHA</a></div>
+                    <div class="clear"></div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+                {% csrf_token %}
+                {% for page in pagets %}
+                <tr>
+                    <td class="action-checkbox"><input type="checkbox" name="action" value="{{doc.id}}" class="action-select" id="selected">
+                    <td class="field-project_name"><a href="#">{{page.name_page}}</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

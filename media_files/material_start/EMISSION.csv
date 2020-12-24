@@ -1,0 +1,17 @@
+PROJETO,DISCIPLINA,DOCUMENTO,NUMERO_DOCUMENTO,COMENTARIOS,STATUS,ELABORADOR,VERIFICADOR,APROVADOR,EMISSOR,ACAO
+Projeto Porto Novo,TELECOM,Memorial Descritivo,PPN-TEL-1000-MD-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Critérios de Projeto,PPN-TEL-1000-CP-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,-
+Projeto Porto Novo,TELECOM,Especificação Técnica,PPN-TEL-1000-ET-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,-
+Projeto Porto Novo,TELECOM,Folha de Dados,PPN-TEL-1000-FD-001,,Em Verificação,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Topologia do Sietema,PPN-TEL-1000-DG-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Arranjo da Sala de Painéis,PPN-TEL-1000-DE-001,,Em Verificação,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Planta de Locação,PPN-TEL-1000-DE-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Planta de Encaminhamento de Cabos,PPN-TEL-1000-DG-001,,Em Emitido,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,-
+Projeto Porto Novo,TELECOM,Diagrama Unifilar,PPN-TEL-1000-DG-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,-
+Projeto Porto Novo,TELECOM,Diagrama de Interligação,PPN-TEL-1000-DG-001,,Em Verificação,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,-
+Projeto Porto Novo,TELECOM,Detalhe Típico de Instalação,PPN-TEL-1000-DE-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Lista de Equipamentos,PPN-TEL-1000-LE-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Lista de Cabos,PPN-TEL-1000-LC-001,,Em Aprovação,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Lista de Materiais,PPN-TEL-1000-LM-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,-
+Projeto Porto Novo,TELECOM,Requisição de Materiais,PPN-TEL-1000-RM-001,,Em Elaboração,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start
+Projeto Porto Novo,TELECOM,Planilha de Quantidades,PPN-TEL-1000-PQ-001,,Em Emissão,Fulano S. Dias,Sicrano R. Cunha,Beltrano A. Silva,Seiquem M. Rodrigues,Start

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Cotação{% endblock %}
+{% block content %}
+
+<div class="content mt-3">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Cotação de Projeto</strong>
+                    </div>
+
+                    <div class="card-body"id="card-body-align">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered"> <!-- id="bootstrap-data-table" class="table table-striped table-bordered" -->
+                            <thead>
+                                <tr>
+                                    <th id="col-id">
+                                        <div class="text">
+                                            <span><input type="checkbox" name="_selected" value="All" id="action-toggle"></span>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </th>
+                                    <th id="col-name-proj">NOME DO PROJETO</th>
+                                    <th id="col-disc">DISCIPLINA</th>
+                                    <th id="col-doc-type">TIPO DE DOCUMENTO</th>
+                                    <th id="col-doc-name">NOME DO DOCUMENTO</th>
+                                    <th id="col-qt">CÓD. DOC.</th>
+                                    <th id="col-qt">EXT. DOC.</th>
+                                    <th id="col-type-page-coust">TIPO DE FOLHA</th>
+                                    <th id="col-qt">QT. FOLHA</th>
+                                    <th id="col-qt">QT. HH</th>
+                                    <th id="col-type-page-coust">CUSTO DOC.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% csrf_token %}
+                                {% for cota in Cotations %}
+                                <tr>
+                                    <td class="action-checkbox"><input type="checkbox" name="_selected_action" value={{cota.id}} class="action-select"></td>
+                                    <!-- <th class="field-project_name"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></th> -->
+                                    <td id="col-nome-proj"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></td>
+                                    <td>{{cota.subject_name}}</td>
+                                    <td>{{cota.doc_name_pattern}}</td>
+                                    <td>{{cota.doc_name}}</td>
+                                    <td>{{cota.cod_doc_type}}</td>
+                                    <td>{{cota.format_doc}}</td>
+                                    <td>{{cota.page_type}}</td>
+                                    <td>{{cota.qt_page}}</td>
+                                    <td>{{cota.qt_hh}}</td>
+                                    <td>{{cota.cost_doc}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    window.onload = alinha;
+
+    function alinha(){
+        //let alinha_pages = document.getElementsByClassName('card-body').style.width = '50%';
+        let alinha_pages = document.getElementById('card-body-align');
+        alinha_pages.style.width = '52%';
+
+        // console.log('foi!!!')
+        // //let tabela = document.getElementsByClassName('align-col');
+        // let tabela = document.getElementById('col5');
+        // //console.log('>>>>>>>: xxx', tabela)
+        // alinha_pages.style.width = '150px';
+
+        // let td_proj = document.getElementById('col-nome-proj');
+        
+        console.log('>>>>>>>: ',alinha_pages)
+        // console.log('______: ',td_proj.value)
+  
+
+
+        // for (let i = 0; i < tds.length; i++)
+        //     tds[i].style.width = '2px';
+
+        
+    }
+
+</script>
+
+{% endblock %}
