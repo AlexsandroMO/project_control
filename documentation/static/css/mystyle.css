@@ -113,3 +113,10 @@ table {
     width: 120px;
     height:22px;
 }
+
+
+
+/* login */
+.auth-card{
+    margin-bottom: 30px;
+}
