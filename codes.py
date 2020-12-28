@@ -4,7 +4,6 @@ import sqlite3
 import pandasql as ps
 from datetime import datetime
 import xlrd
-import excel
 
 
 def rotina_carrega_pl():
