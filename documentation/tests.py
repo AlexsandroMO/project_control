@@ -41,7 +41,11 @@ from django.test import TestCase
 
 
 
-
+""" if request.user.is_authenticated():
+    # Faça algo para usuários logados.
+else:
+    # Faça algo para usuários anônimos.
+     """
 
 '''
 from datetime import datetime

@@ -3,92 +3,196 @@
 {% block title %}Cotação{% endblock %}
 {% block content %}
 
-<div class="content mt-3">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Cotação de Projeto</strong>
-                    </div>
-
-                    <div class="card-body"id="card-body-align">
-                        <table id="bootstrap-data-table" class="table table-striped table-bordered"> <!-- id="bootstrap-data-table" class="table table-striped table-bordered" -->
-                            <thead>
-                                <tr>
-                                    <th id="col-id">
-                                        <div class="text">
-                                            <span><input type="checkbox" name="_selected" value="All" id="action-toggle"></span>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </th>
-                                    <th id="col-name-proj">NOME DO PROJETO</th>
-                                    <th id="col-disc">DISCIPLINA</th>
-                                    <th id="col-doc-type">TIPO DE DOCUMENTO</th>
-                                    <th id="col-doc-name">NOME DO DOCUMENTO</th>
-                                    <th id="col-qt">CÓD. DOC.</th>
-                                    <th id="col-qt">EXT. DOC.</th>
-                                    <th id="col-type-page-coust">TIPO DE FOLHA</th>
-                                    <th id="col-qt">QT. FOLHA</th>
-                                    <th id="col-qt">QT. HH</th>
-                                    <th id="col-type-page-coust">CUSTO DOC.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% csrf_token %}
-                                {% for cota in Cotations %}
-                                <tr>
-                                    <td class="action-checkbox"><input type="checkbox" name="_selected_action" value={{cota.id}} class="action-select"></td>
-                                    <!-- <th class="field-project_name"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></th> -->
-                                    <td id="col-nome-proj"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></td>
-                                    <td>{{cota.subject_name}}</td>
-                                    <td>{{cota.doc_name_pattern}}</td>
-                                    <td>{{cota.doc_name}}</td>
-                                    <td>{{cota.cod_doc_type}}</td>
-                                    <td>{{cota.format_doc}}</td>
-                                    <td>{{cota.page_type}}</td>
-                                    <td>{{cota.qt_page}}</td>
-                                    <td>{{cota.qt_hh}}</td>
-                                    <td>{{cota.cost_doc}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Cotação de Projetos</h3>
             </div>
+
+            <form action="{% url 'create-LD' %}" method="GET">  
+   
+            <!-- /.card-header -->
+            <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info"> <!-- class="table table-striped table-bordered" -->
+                <thead>
+                  <tr>
+                    <th id="col-id">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <input class="marcar" type="checkbox" name="action" value="All" onclick="marcarTodos(this.checked);">
+                        </span>
+                      </div>
+                    <div class="clear"></div>
+                    </th>
+                    <th id="col-name-proj">NOME DO PROJETO</th>
+                    <th id="col-disc">DISCIPLINA</th>
+                    <th id="col-doc-name">NOME DO DOCUMENTO</th>
+                    <th id="col-qt">CÓD. DOC.</th>
+                    <th id="col-qt">EXT. DOC.</th>
+                    <th id="col-type-page-coust">TIPO DE FOLHA</th>
+                    <th id="col-qt">QT. FOLHA</th>
+                    <th id="col-qt">QT. HH</th>
+                    <th id="col-type-page-coust">CUSTO DOC.</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% csrf_token %}
+                  {% for cota in Cotations %}
+                  <tr>
+                    <td> 
+
+                
+                        
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <input class="marcar" type="checkbox" name="action" value="{{doc.id}}" >
+                        </span>
+                      </div>
+                    </td> 
+                    <td id="col-nome-proj" class="field-proj_name nowrap"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></td>
+                    <td>{{cota.subject_name}}</td>
+                    <td>{{cota.doc_name}}</td>
+                    <td>{{cota.cod_doc_type}}</td>
+                    <td>{{cota.format_doc}}</td>
+                    <td>{{cota.page_type}}</td>
+                    <td>{{cota.qt_page}}</td>
+                    <td>{{cota.qt_hh}}</td>
+                    <td>{{cota.cost_doc}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th></th>
+                  <th>Browser</th>
+                  <th>Platform(s)</th>
+                  <th>CSS grade</th>
+                  <th>Rendering engine</th>
+                  <th>Browser</th>
+                  <th>Platform(s)</th>
+                  <th>Engine version</th>
+                  <th>CSS grade</th>
+                  <th>CSS grade</th>
+                </tr>
+                </tfoot>
+              </table>
+          </div>
+
+          <div class="card card-default collapsed-card">
+            <div class="card-header">
+              <h3 class="card-title">Selecionar Projeto e Disciplina</h3>
+  
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="display: none;">
+              <div class="row">
+                <div class="col-md-6" data-select2-id="29">
+                  <div class="form-group">
+                    <label>Projeto
+                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="proj">
+                      <option selected="selected" data-select2-id="3" value="0">Selecione Projeto</option>
+                        {% for proj in MyProjects %}
+                          <option value={{proj.id}}>{{proj.project_name}}</option>
+                        {% endfor%}
+                    </select></label>
+
+                    <label>Disciplina
+                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="sub">
+                      <option selected="selected" data-select2-id="3" value="0">Selecione Disiciplina</option>
+                        {% for sub in Subjects %}
+                        <option value={{sub.id}}>{{sub.subject_name}}</option>
+                        {% endfor%}
+                    </select></label>
+
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer" style="display: none;">
+              Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+              the plugin.
+            </div>
+          </div>
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Sign in</button>
+                <button type="submit" class="btn btn-default float-right">Cancel</button>
+              </div>
+
+            </div>
+          </div>
         </div>
+
+            </form>
+            </div>
+ 
+      </div>
+      <!-- /.row -->
     </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
 </div>
 
-
-<script>
-    window.onload = alinha;
-
-    function alinha(){
-        //let alinha_pages = document.getElementsByClassName('card-body').style.width = '50%';
-        let alinha_pages = document.getElementById('card-body-align');
-        alinha_pages.style.width = '52%';
-
-        // console.log('foi!!!')
-        // //let tabela = document.getElementsByClassName('align-col');
-        // let tabela = document.getElementById('col5');
-        // //console.log('>>>>>>>: xxx', tabela)
-        // alinha_pages.style.width = '150px';
-
-        // let td_proj = document.getElementById('col-nome-proj');
-        
-        console.log('>>>>>>>: ',alinha_pages)
-        // console.log('______: ',td_proj.value)
-  
-
-
-        // for (let i = 0; i < tds.length; i++)
-        //     tds[i].style.width = '2px';
-
-        
-    }
-
-</script>
-
 {% endblock %}
+
+
+
+<!-- <div class="card-body">
+  <table>
+    <thead>
+    <tr>
+      <th>AÇÃO</th>
+      <th>NOME DO PROJETO</th>
+      <th>DISCIPLINA</th>
+    </tr>
+    </thead>
+      <form action="{% url 'create-LD' %}" method="GET" id="changelist-form" novalidate>
+      <div class="actions">
+    <tbody>
+      <tr>
+        <td id="alinha-td">
+          <label><select class="form-control" name="action" required>
+            <option value="" selected>---------</option>
+            <option value="create_LD">Criar Lista de Documento</option>
+            <option value="create_budget">Criar Orçamento</option>
+          </select></label>
+        </td>
+        <td id="alinha-td">
+          <label><select class="form-control" name="proj" required>
+            <option value="" selected>---------</option>
+            {% for proj in MyProjects %}
+            <option value={{proj.id}}>{{proj.project_name}}</option>
+            {% endfor%}
+          </select></label>
+        </td>
+        <td id="alinha-td">
+          <label><select class="form-control" name="sub" required>
+            <option value="" selected>---------</option>
+            {% for sub in Subjects %}
+            <option value={{sub.id}}>{{sub.subject_name}}</option>
+            {% endfor%}
+          </select></label>
+        </td>
+        <td id="alinha-td-bt">
+          <button type="submit" class="btn btn-secondary" title="Run the selected action" name="index" value="0">Criar Planilha</button>
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+<!-- </div> -->

@@ -61,6 +61,7 @@ class DocumentStandard(models.Model): #Documentos de Projeto
     doc_type = models.ForeignKey(DocT, on_delete=models.CASCADE)
     format_doc = models.ForeignKey(Pageformat, on_delete=models.CASCADE)
     doc_type_page = models.ForeignKey(PageT, on_delete=models.CASCADE)
+    #user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_doc = models.DateTimeField(auto_now_add=True)
     update_doc = models.DateTimeField(auto_now=True)
   
@@ -73,6 +74,7 @@ class Employee(models.Model): #Lista de Funcionários
     emp_name = models.CharField(max_length=255)
     emp_office = models.CharField(max_length=255)
     emp_contrato = models.CharField(max_length=20)
+    photo = models.FileField(upload_to='uploads/photos/', blank=True, null=True)
     created_emp = models.DateTimeField(auto_now_add=True)
     update_emp = models.DateTimeField(auto_now=True)
 

@@ -4,6 +4,7 @@ import sqlite3
 import pandasql as ps
 from datetime import datetime
 import xlrd
+import openpyxl
 
 
 def rotina_carrega_pl():
@@ -80,8 +81,8 @@ def rotina_carrega_pl():
         c = conn.cursor()
 
         qsl_datas = f"""
-                    INSERT INTO taskproject_employee(emp_name,emp_office,emp_contrato,created_emp,update_emp)
-                    VALUES ('{func}','{cargo}','{contr}','{date_today}','{date_today}');
+                    INSERT INTO taskproject_employee(emp_name,emp_office,emp_contrato,photo,created_emp,update_emp)
+                    VALUES ('{func}','{cargo}','{contr}','','{date_today}','{date_today}');
                     """
         c.execute(qsl_datas)
         conn.commit()

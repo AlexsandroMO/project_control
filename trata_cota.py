@@ -82,12 +82,12 @@ def trata_cotation(val, cost_type):
     return 'Feito!'
 
 
-def cria_orc(result_itens):
+def cria_orcxx(result_itens):
 
     def read_sql_doc(id): #Information Tables Read
         conn = sqlite3.connect('db.sqlite3')
         sql_datas = f"""
-                    SELECT * FROM taskproject_DocumentStandard
+                    SELECT * FROM documentation_documentstandard
                     WHERE id = {id};
         """
 
@@ -102,7 +102,7 @@ def cria_orc(result_itens):
         c = conn.cursor()
 
         qsl_datas = f"""
-                    INSERT INTO taskproject_cotation(proj_name_id,subject_name_id,doc_name_pattern_id,doc_name,cod_doc_type_id,page_type_id,format_doc_id,created_ct,update_ct)
+                    INSERT INTO documentation_cotation(proj_name_id,subject_name_id,doc_name_pattern_id,doc_name,cod_doc_type_id,page_type_id,format_doc_id,created_ct,update_ct)
                     VALUES ('{proj_name}','{subj_name}','{doc_pattern}','{doc_name}','{doc_type}','{page_type}','{format_doc}','{date_today}','{date_today}');
                     """
         c.execute(qsl_datas)
@@ -124,3 +124,47 @@ def cria_orc(result_itens):
 
 
 
+
+
+
+
+
+def cria_orc_all(proj, sub):
+
+    def read_sql_doc():
+        conn = sqlite3.connect('db.sqlite3')
+        sql_datas = f"""
+                    SELECT * FROM documentation_documentstandard
+        """
+
+        read_db = pd.read_sql_query(sql_datas, conn)
+        conn.close()
+        
+        return read_db
+
+
+    def cria_cotation(proj_name,subj_name,doc_pattern,doc_name,doc_type,page_type,format_doc,date_today):
+        conn = sqlite3.connect('db.sqlite3')
+        c = conn.cursor()
+
+        qsl_datas = f"""
+                    INSERT INTO documentation_cotation(proj_name_id,subject_name_id,doc_name_pattern_id,doc_name,cod_doc_type_id,page_type_id,format_doc_id,created_ct,update_ct)
+                    VALUES ('{proj_name}','{subj_name}','{doc_pattern}','{doc_name}','{doc_type}','{page_type}','{format_doc}','{date_today}','{date_today}');
+                    """
+        c.execute(qsl_datas)
+        conn.commit()
+        conn.close()
+
+
+    date_today = datetime.today()
+    doc = read_sql_doc()
+
+    for i in range(len(doc['id'])):
+        print('>>>>>>',i)
+        doc['documment_name'].loc[i]
+        #name = doc['documment_name'].loc[0]
+
+        cria_cotation(int(proj), int(sub), doc['id'].loc[i], doc['documment_name'].loc[i], doc['doc_type_id'].loc[i],doc['doc_type_page_id'].loc[i],doc['format_doc_id'].loc[i], date_today)
+
+
+    return 'feito!'

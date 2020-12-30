@@ -6,10 +6,10 @@ from .forms import CotationForm
 from django.contrib import messages
 from .models import MyProject, PageT, DocT, DocumentStandard, Subject, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue
 
-
 from decimal import Decimal
 import sqlite3
 import pandas as pd
+import numpy as np
 import codes
 import trata_cota
 import delete_itens
@@ -52,9 +52,7 @@ def projectlist(request):
 
     MyProjects = paginator.get_page(page)
 
-    cols = ['NOME DO PROJETO', 'NOME DA EMPRESA','COMENTÁRIOS']
-
-    return render(request, 'documentation/projetos.html', {'MyProjects': MyProjects, 'cols':cols})
+    return render(request, 'documentation/projetos.html', {'MyProjects': MyProjects})
 
 
 
@@ -68,30 +66,32 @@ def Pagetypelist(request):
 
 def Doctypelist(request):
     
-    doc = DocT.objects.all()
-    paginator = Paginator(doc, 10)
-    page = request.GET.get('page')
+    docts = DocT.objects.all()
+    #paginator = Paginator(doc, 10)
+    #page = request.GET.get('page')
 
-    docts = paginator.get_page(page)
+    #docts = paginator.get_page(page)
 
     return render(request, 'documentation/doc-type.html', {'docts': docts})
 
 
-
+#@login_required
 def docummentypelist(request):
     
+    #Document = DocumentStandard.objects.all().order_by('doc_type').filter(user=request.user)
     Document = DocumentStandard.objects.all().order_by('doc_type')
-    MyProjects = MyProject.objects.all().order_by('project_name') 
-    Subjects = Subject.objects.all().order_by('subject_name') 
+    MyProjects = MyProject.objects.all().order_by('project_name')
+    Subjects = Subject.objects.all().order_by('subject_name')
+    Employees = Employee.objects.all().order_by('-emp_name')
 
-    paginator = Paginator(Document, 10)
-    page = request.GET.get('page')
+    len_doc = len(Document)
 
-    DocumentStandards = paginator.get_page(page)
+    #paginator = Paginator(Document, 20)
+    #page = request.GET.get('page')
 
-    cols = ['NOME DO DOCUMENTO', 'SIGLA DOC','FORMATO', 'TIPO FOLHA']
+    #DocumentStandards = paginator.get_page(page)
 
-    return render(request, 'documentation/tipos-documentos.html', {'DocumentStandards': DocumentStandards, 'cols': cols, 'MyProjects': MyProjects, 'Subjects': Subjects})
+    return render(request, 'documentation/tipos-documentos.html', {'Document': Document, 'MyProjects': MyProjects, 'Subjects': Subjects, 'Employees':Employees, 'len_doc':len_doc})
 
 
 
@@ -162,71 +162,7 @@ def Cotationlist(request):
     Subjects = Subject.objects.all().order_by('subject_name')
     DocStandards = DocumentStandard.objects.all()
 
-    '''paginator = Paginator(Cota, 10)
-    page = request.GET.get('page')
-
-    Cotations = paginator.get_page(page)'''
-
-    print('>>>>>>', request.GET)
-
-    if request.GET:
-        proj_filter = 0
-        sub_filter = 0
-
-        if request.GET.get('proj'):
-            for a in request.GET.get('proj'):
-                proj_filter = a
-
-        if request.GET.get('sub'):
-            for a in request.GET.get('sub'):
-                sub_filter = a
-
-        cost = ProjectValue.objects.all()
-
-        cost_proj = []
-        if cost:
-            for a in cost:
-                cost_proj.append([a.cost_by_hh,a.cost_by_doc,a.cost_by_A1])
-
-
-        if request.GET.get('cota'):
-            cost_type = request.GET.get('cota')
-            if cost_type == 'option1':
-                val = cost_proj[0][0]
-
-            elif cost_type == 'option2':
-                val = cost_proj[0][1]
-
-            elif cost_type == 'option3':
-                val = cost_proj[0][2]
-
-            trata_cota.trata_cotation(str(val), cost_type)
-
-
-        if proj_filter != 0 and sub_filter == 0:
- 
-            Cotations = Cotation.objects.all().filter(proj_name=proj_filter).order_by('cod_doc_type')
-
-            cols = ['NOME DO PROJETO', 'DISCIPLINA', 'TIPO DOC.', 'NOME DOC','COD. DOC.', 'TIPO FOLHA','EXT. DOC','QD. FOLHAS', 'QT. HH','CUSTO DOC.']
-
-            #return redirect('cotation-list', Cotations='Cotations')
-            return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards,'cols':cols, 'MyProjects':MyProjects})
-	    
-        if proj_filter != 0 and sub_filter != 0:
-
-            Cotations = Cotation.objects.all().filter(proj_name=proj_filter, subject_name=sub_filter).order_by('cod_doc_type')
-
-            cols = ['NOME DO PROJETO', 'DISCIPLINA', 'TIPO DOC.', 'NOME DOC','COD. DOC.', 'TIPO FOLHA','EXT. DOC','QD. FOLHAS', 'QT. HH','CUSTO DOC.']
-
-            return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards,'cols':cols, 'MyProjects':MyProjects})
-	
-        
-        return redirect('cotation-list' )
-
-
-    cols = ['NOME DO PROJETO', 'DISCIPLINA', 'TIPO DOC.', 'NOME DOC','COD. DOC.', 'TIPO FOLHA','EXT. DOC','QD. FOLHAS', 'QT. HH','CUSTO DOC.']
-
-    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards,'cols':cols, 'MyProjects':MyProjects, 'Subjects':Subjects})
+    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards, 'MyProjects':MyProjects, 'Subjects':Subjects})
 	
 
 def EditeCotation(request, id):
@@ -296,15 +232,31 @@ def Create_PL(request): #Uso admin /CreatePL
 
 
 def Create_LD(request):
+
+    if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
+        if dict(request.GET)['action'][0][:3] == 'All':
+            trata_cota.cria_orc_all(int(dict(request.GET)['proj'][0]), int(dict(request.GET)['sub'][0]))
+
+            return redirect('cotation-list')
+
+    return redirect('documment-type-list')
+
+
+
+""" 
+def Create_LD(request):
     #----------------------------------------------------------
     url = str(request)
-    list_get = url.split('&')
+    # list_request = url.split('?')
+    # list_get = str(list_request[1]).split('&')
+
+    print(':::::', request.GET)
 
     itens = [] 
     for a in range(len(list_get)):
-        if list_get[a][:4] == 'acti':
+        if list_get[a][:6] == 'action':
             itens.append(list_get[a][7:])
-
+            
         elif list_get[a][:4] == 'proj':
             itens.append(list_get[a][5:])
 
@@ -330,16 +282,86 @@ def Create_LD(request):
 
     result_itens = [itens[:3],list_id]
 
-    print('>>>>>>=====', result_itens)
+    print(':::::', result_itens)
+    print('>>>>>: ',list_get)
+
+    print('>>>>>>=====>>>', itens)
 
     if itens[0] == 'create_budget' and len(itens) > 3:
         #result = trata_cota.cria_orc(result_itens)
+        print('\n\n')
+        print(':::::xxx', result_itens)
         #trata_cota.cria_orc(result_itens)
-        print('ok')
+   
         return redirect('cotation-list')
         
 
     #---------------------------------------------------------- Sei que tem como fazer isso de forma muito mais simples, mas por hora foi o que consegui fazer. (Estudar como fazer isso com recursos django...)
 
     return redirect('documment-type-list')
-    #
+    # 
+    # 
+    # 
+    # 
+    
+    
+    
+    
+    '''paginator = Paginator(Cota, 10)
+    page = request.GET.get('page')
+
+    Cotations = paginator.get_page(page)'''
+
+    print('>>>>>>', request.GET)
+
+    if request.GET:
+        proj_filter = 0
+        sub_filter = 0
+
+        if request.GET.get('proj'):
+            for a in request.GET.get('proj'):
+                proj_filter = a
+
+        if request.GET.get('sub'):
+            for a in request.GET.get('sub'):
+                sub_filter = a
+
+        cost = ProjectValue.objects.all()
+
+        cost_proj = []
+        if cost:
+            for a in cost:
+                cost_proj.append([a.cost_by_hh,a.cost_by_doc,a.cost_by_A1])
+
+
+        if request.GET.get('cota'):
+            cost_type = request.GET.get('cota')
+            if cost_type == 'option1':
+                val = cost_proj[0][0]
+
+            elif cost_type == 'option2':
+                val = cost_proj[0][1]
+
+            elif cost_type == 'option3':
+                val = cost_proj[0][2]
+
+            trata_cota.trata_cotation(str(val), cost_type)
+
+
+        if proj_filter != 0 and sub_filter == 0:
+ 
+            Cotations = Cotation.objects.all().filter(proj_name=proj_filter).order_by('cod_doc_type')
+
+            cols = ['NOME DO PROJETO', 'DISCIPLINA', 'TIPO DOC.', 'NOME DOC','COD. DOC.', 'TIPO FOLHA','EXT. DOC','QD. FOLHAS', 'QT. HH','CUSTO DOC.']
+
+            #return redirect('cotation-list', Cotations='Cotations')
+            return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards,'cols':cols, 'MyProjects':MyProjects})
+	    
+        if proj_filter != 0 and sub_filter != 0:
+
+            Cotations = Cotation.objects.all().filter(proj_name=proj_filter, subject_name=sub_filter).order_by('cod_doc_type')
+
+            return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards,'cols':cols, 'MyProjects':MyProjects})
+    
+    
+    """

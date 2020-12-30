@@ -3,131 +3,123 @@
 {% block title %}Documentos{% endblock %}
 {% block content %}
 
-<!-- Main content -->
-<section class="content">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Modelo de Documentação Técnica</h3>
+            </div>
 
-          <div class="card-header">
-            <h3 class="card-title">Modelo de Documentação Técnica</h3>
+            <form action="{% url 'create-LD' %}" method="GET">  
+
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th id="col-id">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <input class="marcar" type="checkbox" name="action" value="All"  onclick="marcarTodos(this.checked);">
+                        </span>
+                      </div>
+                    <div class="clear"></div>
+                    </th>
+                    <th id="col-name-doc">NOME DO DOCUMENTO</th>
+                    <th id="col-type-doc">TIPO DE DOCUMENTO</th>
+                    <th id="col-type-arq">TIPO DE ARQUIVO</th>
+                    <th id="col-model-page">MODELO DE FOLHA</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% csrf_token %}
+                  {% for doc in Document %}
+                  <tr>
+                    <td> 
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <input class="marcar" type="checkbox" name="action" value="{{doc.id}}">
+                        </span>
+                      </div>
+                    </td> 
+                    <th class="field-proj_name nowrap"><a href="#">{{doc.documment_name}}</a></th>
+                    <td>{{doc.doc_type}}</td>
+                    <td>{{doc.format_doc}}</td>
+                    <td>{{doc.doc_type_page}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
           </div>
-        
-        <div class="card-body">
 
-
-
-
-          <table> <!-- class="table table-bordered table-striped" -->
-            <thead>
-            <tr>
-              <th>AÇÃO</th>
-              <th>NOME DO PROJETO</th>
-              <th>DISCIPLINA</th>
-            </tr>
-            </thead>
-              <form action="{% url 'create-LD' %}" method="GET" id="changelist-form" novalidate>
-              <div class="actions">
-            <tbody>
-              <tr>
-                <td id="alinha-td">
-                  <label><select class="form-control" name="action" required>
-                    <option value="" selected>---------</option>
-                    <option value="create_LD">Criar Lista de Documento</option>
-                    <option value="create_budget">Criar Orçamento</option>
-                  </select></label>
-                </td>
-                <td id="alinha-td">
-                  <label><select class="form-control" name="proj" required>
-                    <option value="" selected>---------</option>
-                    {% for proj in MyProjects %}
-                    <option value={{proj.id}}>{{proj.project_name}}</option>
-                    {% endfor%}
-                  </select></label>
-                </td>
-                <td id="alinha-td">
-                  <label><select class="form-control" name="sub" required>
-                    <option value="" selected>---------</option>
-                    {% for sub in Subjects %}
-                    <option value={{sub.id}}>{{sub.subject_name}}</option>
-                    {% endfor%}
-                  </select></label>
-                </td>
-                <td id="alinha-td-bt">
-                  <button type="submit" class="btn btn-secondary" title="Run the selected action" name="index" value="0">Criar Planilha</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
+          <div class="card card-default collapsed-card">
+            <div class="card-header">
+              <h3 class="card-title">Selecionar Projeto e Disciplina</h3>
   
-          <!-- /.card-header -->
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="display: none;">
+              <div class="row">
+                <div class="col-md-6" data-select2-id="29">
+                  <div class="form-group">
+                    <label>Projeto
+                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="proj">
+                      <option selected="selected" data-select2-id="3" value="0">Selecione Projeto</option>
+                        {% for proj in MyProjects %}
+                          <option value={{proj.id}}>{{proj.project_name}}</option>
+                        {% endfor%}
+                    </select></label>
 
-          <div id="ajusta-tabela" class="card-body table-responsive p-0" style="height: 400px;" >
-         
-             <table class="table table-bordered table-striped mb-none"> <!-- class="table table-bordered table-striped" -->
-              <thead>
-              <tr name="selected">
-                <th scope="col"  class="action-checkbox-column">
-                    <div class="text"><span><input type="checkbox" name="action" value="All" id="action-toggle"></span></div>
-                    <div class="clear"></div>
-                </th>
-                {% for col in cols %}
-                <th scope="col"  class="column-__str__">
-                    <div class="text"><a href="X">{{ col }}</a></div>
-                    <div class="clear"></div>
-                </th>
-                {% endfor %}
-              </tr>
-              </thead>
-              
-              <tbody>
-                {% csrf_token %}
-                {% for doc in DocumentStandards %}
-                <tr>
-                    <td class="action-checkbox" id="width-col0">
-                    <input type="checkbox" name="action" value={{doc.id}} class="action-select"></td>
-                    <!-- <td class="field-proj_name nowrap"><a href="http://127.0.0.1:8000/edite_cotation/{{doc.id}}">{{doc.documment_name}}</a></td> -->
-                    <th id="width-col1" class="field-proj_name nowrap"><a href="#">{{doc.documment_name}}</a></th>
-                    <td id="width-col3">{{doc.doc_type}}</td>
-                    <td id="width-col3">{{doc.format_doc}}</td>
-                    <td id="width-col3">{{doc.doc_type_page}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+                    <label>Disciplina
+                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="sub">
+                      <option selected="selected" data-select2-id="3" value="0">Selecione Disiciplina</option>
+                        {% for sub in Subjects %}
+                        <option value={{sub.id}}>{{sub.subject_name}}</option>
+                        {% endfor%}
+                    </select></label>
 
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer" style="display: none;">
+              Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+              the plugin.
+            </div>
           </div>
 
-            <div class="row">
-              <div class="col-sm-12 col-md-5">
-                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Mostrando {{ DocumentStandards.number }} de {{ DocumentStandards.paginator.num_pages }} Listas</div>
-            </div>
-            
-            <div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                <ul class="pagination">
-                    {% if DocumentStandards.has_previous %}
-                      <li class="paginate_button page-item previous" id="example1_previous"><a href="?page={{ DocumentStandards.previous_page_number }}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                      <li class="paginate_button page-item next disabled" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
-                    {% endif %}
-     
-                    {% if DocumentStandards.has_next %}
-                      <li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                      <li class="paginate_button page-item next" id="example1_next"><a href="?page={{ DocumentStandards.next_page_number }}" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Sign in</button>
+                <button type="submit" class="btn btn-default float-right">Cancel</button>
+              </div>
 
+            </div>
+          </div>
         </div>
-        
-        </form>
 
-        </div>
+            </form>
+            </div>
+ 
       </div>
+      <!-- /.row -->
     </div>
-  </div>
-</section>
-
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
 
 {% endblock %}

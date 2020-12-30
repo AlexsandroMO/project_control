@@ -19,7 +19,7 @@ class DocTAdmin(admin.ModelAdmin):
 
 class DocumentStandardAdmin(admin.ModelAdmin):
     fields = ('documment_name', 'doc_type','format_doc','doc_type_page')
-    list_display = ('documment_name', 'doc_type','format_doc','doc_type_page','created_doc','update_doc')
+    list_display = ('id','documment_name', 'doc_type','format_doc','doc_type_page','created_doc','update_doc')
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -30,6 +30,7 @@ class SubjectAdmin(admin.ModelAdmin):
 class CotationAdmin(admin.ModelAdmin):
     fields = ('proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'qt_hh','cost_doc')
     list_display = ('proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'qt_hh','cost_doc','created_ct','update_ct') 
+
 
  
 class UploadAdmin(admin.ModelAdmin):
@@ -47,16 +48,21 @@ class PageformatAdmin(admin.ModelAdmin):
     list_display = ('name_format','created_fm','update_fm')
     
 
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ('emp_name','photo')
+
+
 
 admin.site.register(MyProject, MyProjectAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(DocumentStandard, DocumentStandardAdmin)
 admin.site.register(Action)
 admin.site.register(StatusDoc)
-admin.site.register(Employee)
+admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Cotation, CotationAdmin)
 admin.site.register(Upload)
 admin.site.register(ProjectValue, ProjectValueAdmin)
 admin.site.register(PageT, PageTAdmin)
 admin.site.register(DocT, DocTAdmin)
 admin.site.register(Pageformat, PageformatAdmin)
+
