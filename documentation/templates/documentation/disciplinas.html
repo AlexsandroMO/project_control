@@ -3,31 +3,59 @@
 {% block title %}Disciplinas{% endblock %}
 {% block content %}
 
-<!-- Main content -->
-<section class="content">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Disciplinas de Projetos</h3>
+            </div>
 
-          <div class="card-header">
-            <h3 class="card-title">Lista de Disciplinas</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-             <table id="example2" class="table table-bordered table-hover"> <!-- class="table table-bordered table-striped" -->
-              <thead>
-              <tr name="selected">
-                <th scope="col"  class="action-checkbox-column">
-                    <div class="text"><span><input type="checkbox" name="_selected" value="All" id="action-toggle"></span></div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-striped dataTable dtr-inline">
+                <thead>
+                  <tr>
+                    <th id="col-id">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text"> -->
+                          <input class="marcar" type="checkbox" name="action" value="All"  onclick="marcarTodos(this.checked);">
+                        <!-- </span> -->
+                      </div>
                     <div class="clear"></div>
-                </th>
-                    <th scope="col"  class="column-__str__">
-                        <div class="text"><a href="X">DISCIPLINA</a></div>
-                        <div class="clear"></div>
                     </th>
-              </tr>
-              </thead>
-              <tbody>
+                    <th id="col-dis">DISCIPLINA</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% csrf_token %}
+                  {% for sub in Subjects %}
+                  <tr>
+                    <td> 
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text"> -->
+                          <input class="marcar" type="checkbox" name="action" value="{{sub.id}}">
+                        <!-- </span> -->
+                      </div>
+                    </td> 
+                    <th class="field-proj_name nowrap"><a href="#">{{sub.subject_name}}</a></th>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+          </div>
+
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+
                 {% csrf_token %}
                 {% for sub in Subjects %}
                 <tr>

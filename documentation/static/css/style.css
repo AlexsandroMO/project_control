@@ -1,112 +1,71 @@
 
+
+.card-body{
+    padding-bottom: 30px;
+    padding-right: 30px;
+    table-layout:fixed;
+    max-width: 100%;
+    overflow: scroll;
+    padding-bottom: 5px;
+    border-right: 30px;
+    /* overflow: hidden; */
+
+}
 /* SORTABLE TABLES */
 
 table{
-    font-size: 13px ;
-    padding: 1px 1px;
-    height: 10px; 
-    /* background: black; */
-    /* url(../static/dist/img/user8-128x128.jpg) 0 0 no-repeat; */
-    /* background-size: 14px auto; */
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 0px;
+    height: 10px;
+    table-layout:fixed;
+    max-width: 100%;
+    overflow: scroll;
+    font-family: arial, sans-serif;
 }
 
-
-thead th {
-    /* visibility: hidden; */
-    margin-left: 2px;
-}
 
 /*Dimencionamento de Colunas*/
 
 #col-id{
-    width: 20px;
+    width: 15px;
 }
 #col-name-proj{
-    width: 600px;
-}
-#col-disc{
-    width: 600px;
-}
-#col-doc-name{
-    width: 800px;
-}
-#col-cod{
-    width: 400px;
-}
-#col-ex-doc{
-    width: 400px;
-}
-#col-type-page{
-    width: 500px;
-}
-#col-qt{
     width: 300px;
 }
-#col-page-coust{
+#col-disc{
+    width: 300px;
+}
+#col-doc-name{
     width: 400px;
+}
+#col-cod{
+    width: 100px;
+}
+#col-ex-doc{
+    width: 100px;
+}
+#col-type-page{
+    width: 150px;
+}
+#col-qt{
+    width: 100px;
+}
+#col-page-coust{
+    width: 150px;
 }
 
 
 
 #col-name-doc{
-    width: 400px;
-}
-#col-company-name{
-    width: 400px;
-}
-#col-comment{
-    width: 800px;
-}
-#col-model-page{
-    width: 200px;
-}
-
-
-
-/*Tabelas*/
-
-/* table, th, td {
-	border: 1px solid black;
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-  } 
-
- td, th{
-	border: 1px solid #dddddd;
-    padding: 8px;
-    text-align: center; 
-} */
-
-/* table {
-    table-layout:fixed;
-    width:100%;
-    word-wrap:break-word;
-   } */
-
-/*Dimencionamento de Colunas*/
-/* #col-id{
-    width: 20px;
-}
-#col-name-proj{
-    width: 200px;
-}
-
-#col-disc{
-    width: 200px;
-}
-#col-doc-type{
     width: 300px;
 }
-#col-doc-name{
-    width: 400px;
+#col-company-name{
+    width: 300px;
 }
-#col-qt{
-    width: 100px;
+#col-comment{
+    width: 600px;
 }
-#col-type-page-coust{
-    width: 130px;
-}
-
 
 
 #col-name-doc{
@@ -120,34 +79,13 @@ thead th {
 }
 #col-model-page{
     width: 200px;
-} */
+}
 
 
+#col-di{
+    width: 300px; 
+}
 
-
-/* table {
-    border: 1px solid black;
-    table-layout: fixed;
-    width: 200px;
-  }
-  
-  th,
-  td {
-    border: 1px solid black;
-    width: 100px;
-    overflow: hidden;
-  }
-
-  textarea {
-    width: 500px;
-    height: 150px;
-  } */
-
-/* 
- table, thead, th{
-    table-layout:auto;
-    width: auto;
-    padding: 0;
-    margin: 0;
-  } 
-   */
+    /* background: black; */
+    /* url(../static/dist/img/user8-128x128.jpg) 0 0 no-repeat; */
+    /* background-size: 14px auto; */
