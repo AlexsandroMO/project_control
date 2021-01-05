@@ -70,17 +70,36 @@ objs = Job.objects.filter(data_initial__gte=dI,data_final__lte=dF)'''
 
 #https://pt.stackoverflow.com/questions/421135/como-fazer-redirect-na-p%C3%A1gina-com-django
 
-
-
 #https://uicookies.com/bootstrap-datatable/
 #view-source:https://colorlib.com/polygon/octopus/tables-advanced.html
-
 #https://datatables.net/
-
-
 #https://www.youtube.com/watch?v=nbD0HHjh5a8
-
 #https://colorlib.com/polygon/gentelella/tables_dynamic.html
-
-
 #https://colorlib.com/polygon/sufee/tables-data.html << site
+#https://www.codigofluente.com.br/configurando-o-django-com-mysql-windows/ -- comentários
+
+#Configurando Mysql no Django
+'''
+https://www.youtube.com/watch?v=pRGqggYzjzU
+https://www.codigofluente.com.br/configurando-o-django-com-mysql-windows/'''
+
+#https://www.youtube.com/watch?v=47H3OHdTkLw
+
+'''Acessa MYSQL-SERVER
+
+mysql -u root -p
+show databases;
+create database [nome_do_banco];
+DROP DATABASE [nome_do_banco];
+exit
+'''
+
+#pip install mysqlclient
+# entra no https://www.lfd.uci.edu/~gohlke/pythonlibs/
+# teste python --vesion. (pegue a versão e procure lá no link acima)
+
+# pip install mysqlclient‑1.4.6‑cp38‑cp38‑win32.whl
+
+# Lembra de jogar esse código no MySQL Workbanch
+# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'adminadmin';
+

@@ -1,3 +1,68 @@
+
+/* SORTABLE TABLES */
+
+table{
+    font-size: 13px ;
+    padding: 1px 1px;
+    height: 10px; 
+    /* background: black; */
+    /* url(../static/dist/img/user8-128x128.jpg) 0 0 no-repeat; */
+    /* background-size: 14px auto; */
+}
+
+
+thead th {
+    /* visibility: hidden; */
+    margin-left: 2px;
+}
+
+/*Dimencionamento de Colunas*/
+
+#col-id{
+    width: 20px;
+}
+#col-name-proj{
+    width: 600px;
+}
+#col-disc{
+    width: 600px;
+}
+#col-doc-name{
+    width: 800px;
+}
+#col-cod{
+    width: 400px;
+}
+#col-ex-doc{
+    width: 400px;
+}
+#col-type-page{
+    width: 500px;
+}
+#col-qt{
+    width: 300px;
+}
+#col-page-coust{
+    width: 400px;
+}
+
+
+
+#col-name-doc{
+    width: 400px;
+}
+#col-company-name{
+    width: 400px;
+}
+#col-comment{
+    width: 800px;
+}
+#col-model-page{
+    width: 200px;
+}
+
+
+
 /*Tabelas*/
 
 /* table, th, td {
@@ -78,11 +143,11 @@
     height: 150px;
   } */
 
-
+/* 
  table, thead, th{
     table-layout:auto;
     width: auto;
     padding: 0;
     margin: 0;
   } 
-  
+   */

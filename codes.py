@@ -1,3 +1,4 @@
+
 import numpy as np
 import pandas as pd
 import sqlite3
@@ -7,148 +8,61 @@ import xlrd
 import openpyxl
 
 
-def rotina_carrega_pl():
+def cria_tabelas(MyProjects,PageTs,DocTs,DocumentStandards,Subjects,Actions,StatusDocs,Employees,form_proj,form_dis,form_paget,form_doct,form_format,form_doc,form_func,form_st,form_ac):
 
-    #-------------------------------------------------------
-    def cria_proj(proj_name, company, comments, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
+    def cria_proj(name_proj, name_company, comment):
+        proj = form_proj.save(commit=False)
+        proj.project_name = name_proj
+        proj.company = name_company
+        proj.comments = comment
+        proj.save()
 
-        qsl_datas = f"""
-                    INSERT INTO taskproject_myproject(project_name,company,comments,created_proj,update_proj)
-                    VALUES ('{proj_name}','{company}','{comments}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
+    def cria_paget(name_page):
+        paget = form_paget.save(commit=False)
+        paget.name_page = name_page
+        paget.save()
 
+    def cria_doct(name_doc):
+        doct = form_doct.save(commit=False)
+        doct.name_doc = name_doc
+        doct.save()
 
-    def cria_doc(doc_name, code_doc, format_doc, doc_type, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
+    def cria_form(form_page):
+        format = form_format.save(commit=False)
+        format.name_format = form_page
+        format.save()
 
-        qsl_datas = f"""
-                    INSERT INTO taskproject_documentstandard(documment_name, doc_type_id, format_doc_id, doc_type_page_id, created_doc, update_doc)
-                    VALUES ('{doc_name}','{code_doc}','{format_doc}','{doc_type}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
+    def cria_doc(doc_name, code_doc, format_doc, doc_type):
+        doc = form_doc.save(commit=False)
+        doc.documment_name = doc_name
+        doc.doc_type_id = int(code_doc)
+        doc.format_doc_id = int(format_doc)
+        doc.doc_type_page_id = int(doc_type)
+        doc.save()
 
+    def cria_dis(name_dis):
+        dis = form_dis.save(commit=False)
+        dis.subject_name = name_dis
+        dis.save()
 
-    def cria_dis(name_dis, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
-
-        qsl_datas = f"""
-                    INSERT INTO taskproject_subject(subject_name, created_sub, update_sub)
-                    VALUES ('{name_dis}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
-
-            
-
-    def cria_st(status, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
-
-        qsl_datas = f"""
-                    INSERT INTO taskproject_statusdoc(doc_status,created_st,update_st)
-                    VALUES ('{status}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
+    def cria_st(status):
+        st = form_st.save(commit=False)
+        st.doc_status = status
+        st.save()
 
 
-    def cria_act(acao, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
+    def cria_act(acao):
+        ac = form_ac.save(commit=False)
+        ac.action_type = acao
+        ac.save()
 
-        qsl_datas = f"""
-                    INSERT INTO taskproject_action(action_type, created_st, update_st)
-                    VALUES ('{acao}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
-
-
-    def cria_func(func, cargo, contr, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
-
-        qsl_datas = f"""
-                    INSERT INTO taskproject_employee(emp_name,emp_office,emp_contrato,photo,created_emp,update_emp)
-                    VALUES ('{func}','{cargo}','{contr}','','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
-
-
-    def cria_paget(name_page, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
-
-        qsl_datas = f"""
-                    INSERT INTO taskproject_paget(name_page,created_pt,update_pt)
-                    VALUES ('{name_page}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
-
-
-    def cria_doct(name_doc, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
-
-        qsl_datas = f"""
-                    INSERT INTO taskproject_doct(name_doc,created_dt,update_dt)
-                    VALUES ('{name_doc}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
-
-
-    def cria_form(form, date_today):
-        conn = sqlite3.connect('db.sqlite3')
-        c = conn.cursor()
-
-        qsl_datas = f"""
-                    INSERT INTO taskproject_pageformat(name_format,created_fm,update_fm)
-                    VALUES ('{form}','{date_today}','{date_today}');
-                    """
-        c.execute(qsl_datas)
-        conn.commit()
-        conn.close()
-
-
-    date_today = datetime.today()
-
-    
-    # df_proj = pd.read_csv('media_files/material_start/PROJETOS.csv', sep=',')
-    # df_doct = pd.read_csv('media_files/material_start/DOC_TYPE.csv','DOC_TYPE')
-    # df_paget = pd.read_csv('media_files/material_start/PAGE_TYPE.csv','PAGE_TYPE')
-    # df_doc = pd.read_csv('media_files/material_start/MODELO_DOCUMENTO.csv','MODELO_DOCUMENTO')
-    # df_dis = pd.read_csv('media_files/material_start/DISCIPLINAS.csv','DISCIPLINAS')
-    # df_st = pd.read_csv('media_files/material_start/STATUS.csv','STATUS') 
-    # df_ac = pd.read_csv('media_files/material_start/ACAO.csv','ACAO')
-    # df_emp = pd.read_csv('media_files/material_start/EMPLOYEES.csv','EMPLOYEES')
-    # df_form = pd.read_csv('media_files/material_start/FORMAT_PAGE.csv','FORMAT_PAGE')
-
-    # print('\n\n\n\n\n\n\n\n\n')
-    # print(df_proj)
-    # print('\n\n\n\n\n\n\n\n\n')
-
-    # df_cotation = pd.read_excel('media_files/material_start/COTATION_DOC.csv','COTATION_DOC')
-    # df_emission = pd.read_excel('media_files/material_start/EMISSION.csv','EMISSION')
-    # df_doc-doc = pd.read_excel('media_files/material_start/DOCUMENTATION.csv','DOCUMENTATION')
-    
+    def cria_func(function, cargo, contr):
+        func = form_func.save(commit=False)
+        func.emp_name = function
+        func.emp_office = cargo
+        func.emp_contrato = contr
+        func.photo = ''
+        func.save()
 
     df_proj = pd.read_excel('media_files/uploads/TABELAS_PROJETO_CONTROLE_DE_PROJETO.xlsx','PROJECTS')
     df_doct = pd.read_excel('media_files/uploads/TABELAS_PROJETO_CONTROLE_DE_PROJETO.xlsx','DOC_TYPE')
@@ -159,73 +73,60 @@ def rotina_carrega_pl():
     df_ac = pd.read_excel('media_files/uploads/TABELAS_PROJETO_CONTROLE_DE_PROJETO.xlsx','ACAO')
     df_emp = pd.read_excel('media_files/uploads/TABELAS_PROJETO_CONTROLE_DE_PROJETO.xlsx','EMPLOYEES')
     df_form = pd.read_excel('media_files/uploads/TABELAS_PROJETO_CONTROLE_DE_PROJETO.xlsx','FORMAT_PAGE')
-
-
+        
+    #PROJ---------------------------------------------------------
     for a in range(len(df_proj['NOME_PROJETO'])):
-        proj_name = df_proj['NOME_PROJETO'].loc[a]
-        company = df_proj['EMPRESA'].loc[a]
-        comments = df_proj['COMENTARIO'].loc[a]
+        name_proj = df_proj['NOME_PROJETO'].loc[a]
+        name_company = df_proj['EMPRESA'].loc[a]
+        comment = df_proj['COMENTARIO'].loc[a]
+        cria_proj(name_proj, name_company, comment)
 
-        cria_proj(proj_name, company, comments, date_today)
-
-
+    #Paget---------------------------------------------------------
     for a in range(len(df_paget['TIPO_FOLHA'])):
         name_page = df_paget['TIPO_FOLHA'].loc[a]
+        cria_paget(name_page)
 
-        cria_paget(name_page, date_today)
-
-
+    #Doct---------------------------------------------------------
     for a in range(len(df_doct['TIPO_DOC'])):
         name_doc = df_doct['TIPO_DOC'].loc[a]
+        cria_doct(name_doc)
 
-        cria_doct(name_doc, date_today)
+    #Dis----------------------------------------------------------
+    for a in range(len(df_dis['NOME_DISCIPLINA'])):
+        name_dis = df_dis['NOME_DISCIPLINA'].loc[a]
+        cria_dis(name_dis)
 
+    #st-----------------------------------------------------------
+    for a in range(len(df_st['STATUS'])):
+        status = df_st['STATUS'].loc[a]
+        cria_st(status)
 
+    #act----------------------------------------------------------
+    for a in range(len(df_ac['ACAO'])):
+        acao = df_ac['ACAO'].loc[a]
+        cria_act(acao)
+
+    #emp----------------------------------------------------------
+    for a in range(len(df_emp['FUNCIONARIO'])):
+        function = df_emp['FUNCIONARIO'].loc[a]
+        cargo = df_emp['CARGO'].loc[a]
+        contr = df_emp['CONTRATO'].loc[a]
+        cria_func(function, cargo, contr)
+
+    #format--------------------------------------------------------
+    for a in range(len(df_form['FORMATO_FOLHA'])):
+        form_page = df_form['FORMATO_FOLHA'].loc[a]
+        cria_form(form_page)
+
+    #Doc----------------------------------------------------------
     for a in range(len(df_doc['LISTA_DOCUMENTOS'])):
         doc_name = df_doc['LISTA_DOCUMENTOS'].loc[a]
         code_doc = int(df_doc['COD_DOC_TIPO'].loc[a])
         format_doc = df_doc['FORMATO'].loc[a]
         doc_type = int(df_doc['TIPO'].loc[a])
-        #print(doc_name, code_doc, format_doc, doc_type, date_today)
-
-        cria_doc(doc_name, code_doc, format_doc, doc_type, date_today)
+        cria_doc(doc_name, code_doc, format_doc, doc_type)
 
 
-    for a in range(len(df_dis['NOME_DISCIPLINA'])):
-        name_dis = df_dis['NOME_DISCIPLINA'].loc[a]
 
-        cria_dis(name_dis, date_today)
+    return 'feito!'
 
-
-    for a in range(len(df_st['STATUS'])):
-        status = df_st['STATUS'].loc[a]
-
-        cria_st(status, date_today)
-
-
-    for a in range(len(df_ac['ACAO'])):
-        acao = df_ac['ACAO'].loc[a]
-
-        cria_act(acao, date_today)
-
-
-    for a in range(len(df_emp['FUNCIONARIO'])):
-        func = df_emp['FUNCIONARIO'].loc[a]
-        cargo = df_emp['CARGO'].loc[a]
-        contr = df_emp['CONTRATO'].loc[a]
-
-        cria_func(func, cargo, contr, date_today)
-
-
-    for a in range(len(df_form['FORMATO_FOLHA'])):
-        form = df_form['FORMATO_FOLHA'].loc[a]
-
-        cria_form(form, date_today)
-
-
-    print('Feito!')
-
-
-    #######Atualizar cargas!!!!!!!!!
-
-#rotina_carrega_pl()

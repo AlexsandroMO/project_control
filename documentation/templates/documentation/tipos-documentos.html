@@ -17,14 +17,14 @@
 
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-striped dataTable dtr-inline">
                 <thead>
                   <tr>
                     <th id="col-id">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">
+                        <!-- <span class="input-group-text"> -->
                           <input class="marcar" type="checkbox" name="action" value="All"  onclick="marcarTodos(this.checked);">
-                        </span>
+                        <!-- </span> -->
                       </div>
                     <div class="clear"></div>
                     </th>
@@ -40,9 +40,9 @@
                   <tr>
                     <td> 
                       <div class="input-group-prepend">
-                        <span class="input-group-text">
+                        <!-- <span class="input-group-text"> -->
                           <input class="marcar" type="checkbox" name="action" value="{{doc.id}}">
-                        </span>
+                        <!-- </span> -->
                       </div>
                     </td> 
                     <th class="field-proj_name nowrap"><a href="#">{{doc.documment_name}}</a></th>
@@ -103,7 +103,7 @@
           </div>
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-info">Sign in</button>
+                <button type="submit" class="btn btn-info">Criar LD</button>
                 <button type="submit" class="btn btn-default float-right">Cancel</button>
               </div>
 

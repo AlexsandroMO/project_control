@@ -4,48 +4,65 @@
 {% block content %}
 
 
-<div class="content mt-3">
-  <div class="animated fadeIn">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header">
-                      <strong class="card-title">Cotação de Projeto</strong>
-                  </div>
 
-                  <div class="card-body">
-                      <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                          <thead>
-                            <tr>
-                              <th id="col-id">
-                                <div class="text">
-                                    <span><input type="checkbox" name="_selected" value="All" id="action-toggle"></span>
-                                </div>
-                                <div class="clear"></div>
-                            </th>
-                              <th id="col-name-proj">NOME DO PROJETO</th>
-                              <th id="col-name-employee">NOME DA EMPRESA</th>
-                              <th id="col-name-comment">COMENTÁRIOS</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {% csrf_token %}
-                              {% for proj in MyProjects %}
-                              <tr>
-                                  <td class="action-checkbox"><input type="checkbox" name="_selected_action" value={{doc.id} class="action-select"></td>
-                                  <td><a href="http://127.0.0.1:8000/edite_cotation/{{doca.id}}">{{proj.project_name}}</a></td>
-                                  <td>{{proj.company}}</td>
-                                  <td>{{proj.comments}}</td>
-                              </tr>
-                              {% endfor %}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Projetos Cadastrados</h3>
+            </div>
+
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-striped dataTable dtr-inline">
+                <thead>
+                  <tr>
+                    <th id="col-id">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text"> -->
+                          <input class="marcar" type="checkbox" name="action" value="All"  onclick="marcarTodos(this.checked);">
+                        <!-- </span> -->
+                      </div>
+                    <div class="clear"></div>
+                    </th>
+                    <th id="col-name-doc">NOME DO PROJETO</th>
+                    <th id="col-company-name">NOME DA EMPRESA</th>
+                    <th id="col-comment">COMENTÁRIOS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% csrf_token %}
+                  {% for proj in MyProjects %}
+                  <tr>
+                    <td> 
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text"> -->
+                          <input class="marcar" type="checkbox" name="action" value="{{doc.id}}">
+                        <!-- </span> -->
+                      </div>
+                    </td> 
+                    <th class="field-proj_name nowrap"><a href="#">{{proj.project_name}}</a></th>
+                    <td>{{proj.company}}</td>
+                    <td>{{proj.comments}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
           </div>
+
       </div>
-  </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
 </div>
+
+
+
 
 
 

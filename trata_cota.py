@@ -5,8 +5,41 @@ import sqlite3
 import pandasql as ps
 from datetime import datetime
 from decimal import *
+import time
+
+def cria_orc_all(MyProjects,DocumentStandards,Subjects,Cotation,form_proj,form_dis,form_doc,form_cota,proj, sub):
+
+    def cria_cota(proj, sub, id_proj, documment, doc_type,doc_type_page,format_doc):
+        cota = form_cota.save(commit=False)
+        cota.proj_name_id = proj
+        cota.subject_name_id = sub
+        cota.doc_name_pattern_id = int(id_proj)
+        cota.doc_name = documment
+        cota.cod_doc_type_id = int(doc_type)
+        cota.page_type_id = int(doc_type_page)
+        cota.format_doc_id = int(format_doc)
+        cota.qt_page = 0
+        cota.qt_hh = 0
+        cota.cost_doc = 0
+        cota.save()
+
+    #for i in range(len(DocumentStandards)):
+    for i in DocumentStandards:
+        #print('>>>>>>',i.id, i.documment_name, i.doc_type_id,i.doc_type_page_id,i.format_doc_id, '>>>>',len(DocumentStandards))
+        #print('>>>>>>',DocumentStandards[i].id, DocumentStandards[i].documment_name, DocumentStandards[i].doc_type_id,DocumentStandards[i].doc_type_page_id,DocumentStandards[i].format_doc_id, '>>>>',len(DocumentStandards))
+        #cria_cota(int(proj), int(sub), DocumentStandards[i].id, DocumentStandards[i].documment_name, DocumentStandards[i].doc_type_id,DocumentStandards[i].doc_type_page_id,DocumentStandards[i].format_doc_id)
+        cria_cota(int(proj), int(sub), i.id, i.documment_name, i.doc_type_id,i.doc_type_page_id,i.format_doc_id)
+
+ 
 
 
+
+
+
+
+
+
+'''
 #-----------------------------------
 def trata_cotation(val, cost_type):
 
@@ -129,6 +162,18 @@ def cria_orcxx(result_itens):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 def cria_orc_all(proj, sub):
 
     def read_sql_doc():
@@ -161,10 +206,10 @@ def cria_orc_all(proj, sub):
 
     for i in range(len(doc['id'])):
         print('>>>>>>',i)
-        doc['documment_name'].loc[i]
+        #doc['documment_name'].loc[i]
         #name = doc['documment_name'].loc[0]
 
         cria_cotation(int(proj), int(sub), doc['id'].loc[i], doc['documment_name'].loc[i], doc['doc_type_id'].loc[i],doc['doc_type_page_id'].loc[i],doc['format_doc_id'].loc[i], date_today)
 
 
-    return 'feito!'
+    return 'feito!'''

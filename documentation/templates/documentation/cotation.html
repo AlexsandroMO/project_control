@@ -22,21 +22,21 @@
                   <tr>
                     <th id="col-id">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">
+                        <!-- <span class="input-group-text"> -->
                           <input class="marcar" type="checkbox" name="action" value="All" onclick="marcarTodos(this.checked);">
-                        </span>
+                        <!-- </span> -->
                       </div>
                     <div class="clear"></div>
                     </th>
-                    <th id="col-name-proj">NOME DO PROJETO</th>
+                    <th scope="col" class="sortable column-proj_name" id="col-name-proj">NOME DO PROJETO</th>
                     <th id="col-disc">DISCIPLINA</th>
                     <th id="col-doc-name">NOME DO DOCUMENTO</th>
-                    <th id="col-qt">CÓD. DOC.</th>
-                    <th id="col-qt">EXT. DOC.</th>
-                    <th id="col-type-page-coust">TIPO DE FOLHA</th>
+                    <th id="col-cod">CÓD. DOC.</th>
+                    <th id="col-ex-doc">EXT. DOC.</th>
+                    <th id="col-type-page">TIPO DE FOLHA</th>
                     <th id="col-qt">QT. FOLHA</th>
                     <th id="col-qt">QT. HH</th>
-                    <th id="col-type-page-coust">CUSTO DOC.</th>
+                    <th id="col-page-coust">CUSTO DOC.</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -44,13 +44,8 @@
                   {% for cota in Cotations %}
                   <tr>
                     <td> 
-
-                
-                        
                       <div class="input-group-prepend">
-                        <span class="input-group-text">
                           <input class="marcar" type="checkbox" name="action" value="{{doc.id}}" >
-                        </span>
                       </div>
                     </td> 
                     <td id="col-nome-proj" class="field-proj_name nowrap"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></td>
@@ -68,15 +63,15 @@
                 <tfoot>
                 <tr>
                   <th></th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>CSS grade</th>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                  <th>CSS grade</th>
+                  <th>Total</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>R$ 50.000,00</th>
                 </tr>
                 </tfoot>
               </table>
@@ -147,52 +142,10 @@
     <!-- /.container-fluid -->
   </section>
   <!-- /.content -->
+
 </div>
+
 
 {% endblock %}
 
 
-
-<!-- <div class="card-body">
-  <table>
-    <thead>
-    <tr>
-      <th>AÇÃO</th>
-      <th>NOME DO PROJETO</th>
-      <th>DISCIPLINA</th>
-    </tr>
-    </thead>
-      <form action="{% url 'create-LD' %}" method="GET" id="changelist-form" novalidate>
-      <div class="actions">
-    <tbody>
-      <tr>
-        <td id="alinha-td">
-          <label><select class="form-control" name="action" required>
-            <option value="" selected>---------</option>
-            <option value="create_LD">Criar Lista de Documento</option>
-            <option value="create_budget">Criar Orçamento</option>
-          </select></label>
-        </td>
-        <td id="alinha-td">
-          <label><select class="form-control" name="proj" required>
-            <option value="" selected>---------</option>
-            {% for proj in MyProjects %}
-            <option value={{proj.id}}>{{proj.project_name}}</option>
-            {% endfor%}
-          </select></label>
-        </td>
-        <td id="alinha-td">
-          <label><select class="form-control" name="sub" required>
-            <option value="" selected>---------</option>
-            {% for sub in Subjects %}
-            <option value={{sub.id}}>{{sub.subject_name}}</option>
-            {% endfor%}
-          </select></label>
-        </td>
-        <td id="alinha-td-bt">
-          <button type="submit" class="btn btn-secondary" title="Run the selected action" name="index" value="0">Criar Planilha</button>
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
-<!-- </div> -->
