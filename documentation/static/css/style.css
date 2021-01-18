@@ -24,6 +24,9 @@ table{
     font-family: arial, sans-serif;
 }
 
+tr{
+    height: 8px;
+}
 
 /*Dimencionamento de Colunas*/
 

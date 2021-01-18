@@ -6,14 +6,14 @@ from .forms import MyProjectForm, SubjectForm, PageTForm, DocTForm, PageformatFo
 from django.contrib import messages
 from .models import MyProject, PageT, DocT, DocumentStandard, Subject, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue
 
-from decimal import Decimal
-import sqlite3
-import pandas as pd
-import numpy as np
 import codes as CODE
 import trata_cota as LDcreate
 import delete_itens
 from datetime import datetime
+from decimal import Decimal
+import sqlite3
+import pandas as pd
+import numpy as np
 
 def hello(request):
     return HttpResponse('<h1>Hello!</h1>')
@@ -161,9 +161,9 @@ def Cotationlist(request):
     Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
     MyProjects = MyProject.objects.all().order_by('project_name')
     Subjects = Subject.objects.all().order_by('subject_name')
-    DocStandards = DocumentStandard.objects.all()
+    DocumentStandards = DocumentStandard.objects.all()
 
-    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocStandards':DocStandards, 'MyProjects':MyProjects, 'Subjects':Subjects})
+    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects})
 	
 
 def EditeCotation(request, id):
@@ -172,8 +172,7 @@ def EditeCotation(request, id):
 
     if (request.method == 'POST'):
         form = CotationForm(request.POST, instance=Cotations)
-        print('>>>>>>>>>>>>>>>>',request.POST)
-
+        
         if (form.is_valid()):
             #Cotations = form.save()
             Cotations.save()
@@ -197,7 +196,6 @@ def DeleteCotation(request, id):
 
 #---------------------------------------------------------------
 
-
 def Create_Cotation(request):
 
     cost = ProjectValue.objects.all()
@@ -218,7 +216,7 @@ def Create_Cotation(request):
         elif cost_type == 'option3':
             val = cost_proj[0][2]
 
-    trata_cota.trata_cotation(str(val), cost_type)
+    LDcreate.trata_cotation(str(val), cost_type)
 
     return redirect('cotation-list')
 
@@ -254,6 +252,42 @@ def Create_PL(request): #Uso admin /CreatePL
 def Create_LD(request):
 
     MyProjects = MyProject.objects.all()
+    DocumentStandards = DocumentStandard.objects.all()
+    Subjects = Subject.objects.all()
+    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+
+    if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
+        
+        GET = dict(request.GET)
+
+        if dict(request.GET)['action'][0] == 'All':
+            LDcreate.cria_orc_all(GET,DocumentStandards)
+
+            return redirect('cotation-list')
+
+        elif dict(request.GET)['action'][0] != 'All':
+            LDcreate.cria_orc_ind(GET)
+
+            return redirect('cotation-list')
+
+
+    return redirect('documment-type-list')
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+def Create_LD(request):
+
+    MyProjects = MyProject.objects.all()
     Subjects = Subject.objects.all()
     DocumentStandards = DocumentStandard.objects.all()
     Cotations = Cotation.objects.all()
@@ -262,20 +296,51 @@ def Create_LD(request):
     form_dis = SubjectForm()
     form_doc = DocumentStandardForm()
     form_cota = CotationForm()
+    
 
-    #print('>>>>>>>',DocumentStandards[0].id)
+    print('======',dict(request.GET))
+    print('==LEN ',len(dict(request.GET)), dict(request.GET)['action'][0])
+
+    
 
     # for i in DocumentStandards:
     #     print('--',i.id, i.documment_name, i.doc_type_id,i.doc_type_page_id,i.format_doc_id, '>>>>',len(DocumentStandards))
     #     #print('>>>>>>',DocumentStandards[i].id, DocumentStandards[i].documment_name, DocumentStandards[i].doc_type_id,DocumentStandards[i].doc_type_page_id,DocumentStandards[i].format_doc_id, '>>>>',len(DocumentStandards))
 
+    #documment_name,doc_type,format_doc,doc_type_page
 
     if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
-        if dict(request.GET)['action'][0][:3] == 'All':
-            execute = LDcreate.cria_orc_all(MyProjects,DocumentStandards,Subjects,Cotations,form_proj,form_dis,form_doc,form_cota,int(dict(request.GET)['proj'][0]), int(dict(request.GET)['sub'][0]))
-            print(execute)
+        
+        GET = dict(request.GET)
+        
+        if dict(request.GET)['action'][0] == 'All':
+            LDcreate.cria_orc_all(GET, MyProjects,DocumentStandards,Subjects,Cotations,form_proj,form_dis,form_doc,form_cota,int(dict(request.GET)['proj'][0]), int(dict(request.GET)['sub'][0]), form_cota)
+
+            return redirect('cotation-list')
+
+        elif dict(request.GET)['action'][0] != 'All':
+            for i in GET['action']:
+                proj = DocumentStandard.objects.all().filter(id=i)
+                for a in proj:
+                    print('<-->',a.documment_name, a.doc_type_id, a.format_doc_id, a.doc_type_page_id)
+                    #LDcreate.cria_orc_unic(GET, a.id, a.documment_name, a.doc_type_id, a.doc_type_page_id, a.format_doc_id, form_cota)
+                    #def cria_cota(proj, sub, id_proj, documment, doc_type,doc_type_page,format_doc):
+                    cota = form_cota.save(commit=False)
+                    cota.proj_name_id = int(GET['proj'][0])
+                    cota.subject_name_id = int(GET['sub'][0])
+                    cota.doc_name_pattern_id = int(a.doc_type_id)#int(id_proj)
+                    cota.doc_name = a.documment_name #documment
+                    cota.cod_doc_type_id = int(a.doc_type_id) #int(doc_type)
+                    cota.page_type_id = int(a.doc_type_page_id) #int(doc_type_page)
+                    cota.format_doc_id = int(a.format_doc_id) #int(format_doc)
+                    cota.qt_page = 0
+                    cota.qt_hh = 0
+                    cota.cost_doc = 0
+                    cota.save()
+
+                    print('----------------Registrado!')
 
             return redirect('cotation-list')
 
     return redirect('documment-type-list')
-
+'''
