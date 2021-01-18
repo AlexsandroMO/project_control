@@ -13,8 +13,71 @@
               <h3 class="card-title">Cotação de Projetos</h3>
             </div>
             
+            
+            <form action="{% url 'calc-cota' %}" method="GET"> 
 
-            <form action="{% url 'create-LD' %}" method="GET">  
+              <div class="card card-default collapsed-card">
+                <div class="card-header">
+                  <h3 class="card-title">Selecionar Tipo de Cotação</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+
+            
+
+                <!-- /.card-header -->
+                <div class="card-body" style="display: none;">
+                  <div class="row">
+                    <div class="col-md-6" data-select2-id="29">
+                      <div class="form-group">
+                     
+                             
+                <div class="form-group clearfix" name="cota">
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" id="checkboxPrimary1" name="cota1">
+                    <label for="checkboxPrimary1">
+                      Cotação por Qt Páginas
+                    </label>
+                  </div>
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" id="checkboxPrimary2" name="cota2">
+                    <label for="checkboxPrimary2">
+                      Cotação por HH
+                    </label>
+                  </div>
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" id="checkboxPrimary3" name="cota3"> <!-- disabled="">  checked="" -->
+                    <label for="checkboxPrimary3">
+                      Cotação por A1 Equivalente
+                      </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-info">Sign in</button>
+
+                </div>
+
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer" style="display: none;">
+                  Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+                  the plugin.
+                </div>
+              </div>
+
+
+          </form>
    
             <!-- /.card-header -->
             

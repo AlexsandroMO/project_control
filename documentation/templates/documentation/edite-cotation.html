@@ -3,6 +3,14 @@
 {% block title %}Editar Cotação{% endblock %}
 {% block content %}
 
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+
 <div class="content mt-3">
     <div class="animated fadeIn">
         <div class="row">
@@ -17,15 +25,15 @@
                         <table id="bootstrap-data-table" class="table table-striped table-bordered"> <!-- id="bootstrap-data-table" class="table table-striped table-bordered" -->
                             <thead>
                                 <tr>
-                                    <th id="col-name-proj">NOME DO PROJETO</th>
-                                    <th id="col-disc">DISCIPLINA</th>
-                                    <th id="col-doc-type">TIPO DE DOCUMENTO</th>
-                                    <th id="col-doc-name">NOME DO DOCUMENTO</th>
-                                    <th id="col-qt">CÓD. DOC.</th>
-                                    <th id="col-qt">EXT. DOC.</th>
-                                    <th id="col-type-page-coust">TIPO DE FOLHA</th>
-                                    <th id="col-qt">QT. FOLHA</th>
-                                    <th id="col-qt">QT. HH</th>
+                                    <th id="col1">NOME DO PROJETO</th>
+                                    <th id="col2">DISCIPLINA</th>
+                                    <th id="col3">TIPO DE DOCUMENTO</th>
+                                    <th id="col3">NOME DO DOCUMENTO</th>
+                                    <th id="col5">CÓD. DOC.</th>
+                                    <th id="col5">EXT. DOC.</th>
+                                    <th id="col5">TIPO DE FOLHA</th>
+                                    <th id="col6">QT. FOLHA</th>
+                                    <th id="col5">QT. HH</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,21 +51,49 @@
                                         <td >{{form.qt_page}}</td>
                                         <td >{{form.qt_hh}}</td>
                                     </tr>
+
+                                    <div class="form-group clearfix" name="cota">
+                                        <div class="icheck-primary d-inline">
+                                          <input type="checkbox" id="checkboxPrimary1" name="cota1">
+                                          <label for="checkboxPrimary1">
+                                            Cotação por Qt Páginas
+                                          </label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                          <input type="checkbox" id="checkboxPrimary2" name="cota2">
+                                          <label for="checkboxPrimary2">
+                                            Cotação por HH
+                                          </label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                          <input type="checkbox" id="checkboxPrimary3" name="cota3"> <!-- disabled="">  checked="" -->
+                                          <label for="checkboxPrimary3">
+                                            Cotação por A1 Equivalente
+                                          </label>
+                                        </div>
+                                      </div>
+                                </div>
+                                
                                     <div class="btn-group">
                                         <input type="submit" class="btn btn-success" value="Editar">
-
-                                        <!-- <a href=""><button type="submit" class="btn btn-secondary" title="back" name="index" value="0">Editar</button></a> -->
                                         <a href="{% url 'cotation-list' %}"><button type="submit" class="btn btn-light" title="back" name="index" value="0">Voltar</button></a>
                                     </div>
+
+                                    
                                 </form>
                             </tbody>
                         </table>
+
                     </div>
+
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <!-- /.row -->
+              </div>
+              <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+          </div>
+
 
 
 {% endblock %}

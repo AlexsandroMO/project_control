@@ -21,6 +21,7 @@ urlpatterns = [
     path('PageT/', views.Pagetypelist, name='page-t'),
     path('DocT/', views.Doctypelist, name='doc-t'),
     path('createLD/', views.Create_LD, name='create-LD'),
+    path('CalcCota/', views.Calc_Cota, name='calc-cota'),
     path('upload/', views.Uploadlists, name='upload-list'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -71,7 +71,12 @@ def cria_orc_ind(GET):
 
 
 
+def calc_cota(Cotations):
 
+    for a in Cotations:
+        print('::::', a.proj_name, a.doc_name_pattern)
+
+    pass
 
 
 

@@ -167,14 +167,30 @@ def Cotationlist(request):
 	
 
 def EditeCotation(request, id):
+
+    Values = ProjectValue.objects.all()
     Cotations = get_object_or_404(Cotation, pk=id)
     form = CotationForm(instance=Cotations)
+
+    print(Values[0].cost_by_hh, Values[0].cost_by_doc, Values[0].cost_by_A1)
+    print(form)
+  
 
     if (request.method == 'POST'):
         form = CotationForm(request.POST, instance=Cotations)
         
         if (form.is_valid()):
             #Cotations = form.save()
+            #print(Values[0].cost_by_hh * Decimal(Cotations.qt_page))
+            '''if Cotations.qt_hh != 0 and Cotations.qt_page == 0:
+                Cotations.cost_doc = Decimal(Cotations.qt_hh) * Values[0].cost_by_hh
+
+            elif Cotations.qt_page != 0 and Cotations.qt_hh == 0:
+                Cotations.cost_doc = Decimal(Cotations.qt_page) * Values[0].cost_by_doc
+
+            elif Cotations.qt_page != 0 and Cotations.qt_hh != 0:
+                Cotations.cost_doc = Values[0].cost_by_A1'''
+
             Cotations.save()
             return redirect('cotation-list')
             
@@ -195,6 +211,34 @@ def DeleteCotation(request, id):
 
 
 #---------------------------------------------------------------
+
+
+
+def Create_LD(request):
+
+    #MyProjects = MyProject.objects.all()
+    DocumentStandards = DocumentStandard.objects.all()
+    #Subjects = Subject.objects.all()
+    #Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+
+    if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
+        
+        GET = dict(request.GET)
+
+        if dict(request.GET)['action'][0] == 'All':
+            LDcreate.cria_orc_all(GET,DocumentStandards)
+
+            return redirect('cotation-list')
+
+        elif dict(request.GET)['action'][0] != 'All':
+            LDcreate.cria_orc_ind(GET)
+
+            return redirect('cotation-list')
+
+
+    return redirect('documment-type-list')
+
+
 
 def Create_Cotation(request):
 
@@ -219,6 +263,19 @@ def Create_Cotation(request):
     LDcreate.trata_cotation(str(val), cost_type)
 
     return redirect('cotation-list')
+
+
+
+def Calc_Cota(request):
+
+    Cotations = Cotation.objects.all()
+
+    print(request.GET)
+
+    LDcreate.calc_cota(Cotations)
+
+    return redirect('cotation-list')
+
 
 
 def Create_PL(request): #Uso admin /CreatePL
@@ -248,30 +305,6 @@ def Create_PL(request): #Uso admin /CreatePL
     return redirect('/')
 
 
-
-def Create_LD(request):
-
-    MyProjects = MyProject.objects.all()
-    DocumentStandards = DocumentStandard.objects.all()
-    Subjects = Subject.objects.all()
-    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
-
-    if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
-        
-        GET = dict(request.GET)
-
-        if dict(request.GET)['action'][0] == 'All':
-            LDcreate.cria_orc_all(GET,DocumentStandards)
-
-            return redirect('cotation-list')
-
-        elif dict(request.GET)['action'][0] != 'All':
-            LDcreate.cria_orc_ind(GET)
-
-            return redirect('cotation-list')
-
-
-    return redirect('documment-type-list')
 
 
 
