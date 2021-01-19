@@ -163,8 +163,49 @@ def Cotationlist(request):
     Subjects = Subject.objects.all().order_by('subject_name')
     DocumentStandards = DocumentStandard.objects.all()
 
-    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects})
-	
+    calc = []
+    for i in Cotations:
+        print(i.cost_doc)
+        calc.append(i.cost_doc)
+
+    total = sum(calc)
+
+    print(total)
+
+    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total})
+
+
+
+#@login_required
+def Cotationlist_filter(request):
+
+    print(request.GET)
+    
+    #GET['proj']
+    
+    Cota = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+    MyProjects = MyProject.objects.all().order_by('project_name')
+    Subjects = Subject.objects.all().order_by('subject_name')
+    DocumentStandards = DocumentStandard.objects.all()
+
+    filter_cota = Cota.objects.all().filter(proj_name='Projeto Porto Novo', subject_name='CFTV')
+
+    for i in filter_cota:
+        print(i.proj_name, i.subject_name)
+
+
+    calc = []
+    for i in filter_cota:
+        print(i.cost_doc)
+        calc.append(i.cost_doc)
+
+    total = sum(calc)
+
+    print(total)
+
+    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total})
+
+
 
 def EditeCotation(request, id):
 
@@ -180,19 +221,7 @@ def EditeCotation(request, id):
         form = CotationForm(request.POST, instance=Cotations)
         
         if (form.is_valid()):
-            #Cotations = form.save()
-            #print(Values[0].cost_by_hh * Decimal(Cotations.qt_page))
-            '''if Cotations.qt_hh != 0 and Cotations.qt_page == 0:
-                Cotations.cost_doc = Decimal(Cotations.qt_hh) * Values[0].cost_by_hh
-
-            elif Cotations.qt_page != 0 and Cotations.qt_hh == 0:
-                Cotations.cost_doc = Decimal(Cotations.qt_page) * Values[0].cost_by_doc
-
-            elif Cotations.qt_page != 0 and Cotations.qt_hh != 0:
-                Cotations.cost_doc = Values[0].cost_by_A1'''
-
-               
-
+            Cotations.cost_doc = 0
             Cotations.save()
             return redirect('cotation-list')
             

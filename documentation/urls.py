@@ -15,6 +15,7 @@ urlpatterns = [
     path('status/', views.Statuslist, name='status-list'),
     path('employee/', views.Employeelist, name='employee-list'),
     path('cotation/', views.Cotationlist, name='cotation-list'),
+    path('cotationFilter/', views.Cotationlist_filter, name='cotation-list-filter'),
     path('edite_cotation/<int:id>', views.EditeCotation, name='edite-cota'),
     path('CreatePL/', views.Create_PL, name='Create-PL'),
     path('CreateCota/', views.Create_Cotation, name='Create-cota'),
