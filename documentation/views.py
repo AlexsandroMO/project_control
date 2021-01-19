@@ -191,6 +191,8 @@ def EditeCotation(request, id):
             elif Cotations.qt_page != 0 and Cotations.qt_hh != 0:
                 Cotations.cost_doc = Values[0].cost_by_A1'''
 
+               
+
             Cotations.save()
             return redirect('cotation-list')
             
@@ -268,11 +270,11 @@ def Create_Cotation(request):
 
 def Calc_Cota(request):
 
+    Values = ProjectValue.objects.all()
     Cotations = Cotation.objects.all()
+    GET = dict(request.GET)
 
-    print(request.GET)
-
-    LDcreate.calc_cota(Cotations)
+    LDcreate.calc_cota(Cotations, Values, GET)
 
     return redirect('cotation-list')
 

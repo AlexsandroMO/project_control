@@ -21,7 +21,7 @@
                   <h3 class="card-title">Selecionar Tipo de Cotação</h3>
 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"> <!-- onclick="status_checkbox()"> -->
                       <i class="fas fa-plus"></i>
                     </button>
                     <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -30,36 +30,35 @@
                   </div>
                 </div>
 
-            
-
                 <!-- /.card-header -->
                 <div class="card-body" style="display: none;">
                   <div class="row">
                     <div class="col-md-6" data-select2-id="29">
                       <div class="form-group">
-                     
-                             
+
                 <div class="form-group clearfix" name="cota">
                   <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="checkboxPrimary1" name="cota1">
+                    <input type="checkbox" id="checkboxPrimary1" name="cota" value="1">
                     <label for="checkboxPrimary1">
                       Cotação por Qt Páginas
                     </label>
                   </div>
                   <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="checkboxPrimary2" name="cota2">
+                    <input type="checkbox" id="checkboxPrimary2" name="cota" value="2">
                     <label for="checkboxPrimary2">
                       Cotação por HH
                     </label>
                   </div>
                   <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="checkboxPrimary3" name="cota3"> <!-- disabled="">  checked="" -->
+                    <input type="checkbox" id="checkboxPrimary3" name="cota" value="3"> <!-- disabled="">  checked="" -->
                     <label for="checkboxPrimary3">
                       Cotação por A1 Equivalente
                       </label>
                     </div>
-                    
-                    <button type="submit" class="btn btn-info">Sign in</button>
+
+                    <button type="submit" class="btn btn-info">Cotar</button>
+
+                    <input type="checkbox" id="checkboxPrimary2" name="cota" value="x" checked="">
 
                 </div>
 

@@ -71,26 +71,78 @@ def cria_orc_ind(GET):
 
 
 
-def calc_cota(Cotations):
+def calc_cota(Cotations, Values, GET):
 
-    for a in Cotations:
-        print('::::', a.proj_name, a.doc_name_pattern)
+    #def cota_cost(id_,proj_name,subject_name,doc_name_pattern,doc_name_,cod_doc_type,page_type,format_doc,qt_page,qt_hh,cost_doc,created_ct,update_ct):
+    
+    def cota_cost(id_cota, cost):
+        try:
+            sqliteConnection = sqlite3.connect('db.sqlite3')
+            cursor = sqliteConnection.cursor()
+            print("Connected to SQLite")
 
-    pass
+            sql_update_query = """Update documentation_cotation set cost_doc = ? where id = ?"""
 
+            data = (cost, id_cota)
+            cursor.execute(sql_update_query, data)
+            sqliteConnection.commit()
 
+            print("Record Updated successfully")
+            cursor.close()
 
+        except sqlite3.Error as error:
+            print("Failed to update sqlite table", error)
 
+        finally:
+            if (sqliteConnection):
+                sqliteConnection.close()
+                print("The sqlite connection is closed")
 
+    if GET['cota']:
+        if GET['cota'][0] == '1':
+            print('foi! 1')
+            for i in Cotations:
+                print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+                cost = Values[0].cost_by_doc * i.qt_page
+                print(cost)
+                cota_cost(i.id, cost)
 
+        if GET['cota'][0] == '2':
+            print('foi! 2')
+            for i in Cotations:
+                print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+                cost = Values[0].cost_by_hh * i.qt_hh
+                print(cost)
+                cota_cost(i.id, cost)
 
-
+        if GET['cota'][0] == '3':
+            print('foi! 3')
+            for i in Cotations:
+                print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+                cost = 0 #Values[0].cost_by_A1
+                print(cost)
+                cota_cost(i.id, cost)
 
 
 
 
 
 '''
+
+#i.qt_hh
+#Values[0].cost_by_hh
+#Values[0].cost_by_doc
+#Values[0].cost_by_A1
+
+     
+#INSERT INTO documentation_cotation(proj_name_id,subject_name_id,doc_name_pattern_id,doc_name,cod_doc_type_id,page_type_id,format_doc_id,qt_page,qt_hh,cost_doc,created_ct,update_ct)
+#VALUES ('{id_}', '{proj_name}', '{subject_name}', '{doc_name_pattern}', '{doc_name_}', '{cod_doc_type}', '{page_type}', '{format_doc}', '{qt_page}', '{qt_hh}', '{cost_doc}', '{created_ct}', '{update_ct}');
+#cota_cost(i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+
+
+
+
+
 
 def cria_orc_all(GET, MyProjects,DocumentStandards,Subjects,Cotation,form_proj,form_dis,form_doc,form_cota,proj, sub):
 
