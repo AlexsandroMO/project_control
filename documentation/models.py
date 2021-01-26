@@ -51,30 +51,33 @@ class Pageformat(models.Model): #Lista de Acões
     created_fm = models.DateTimeField(auto_now_add=True)
     update_fm = models.DateTimeField(auto_now=True)
   
+    
     def __str__(self):
         return self.name_format
 
 
-class DocumentStandard(models.Model): #Documentos de Projeto
+class DocumentStandard(models.Model):
 
-    documment_name = models.CharField(max_length=255)
-    doc_type = models.ForeignKey(DocT, on_delete=models.CASCADE)
-    format_doc = models.ForeignKey(Pageformat, on_delete=models.CASCADE)
-    doc_type_page = models.ForeignKey(PageT, on_delete=models.CASCADE)
+    documment_name = models.CharField(max_length=255, verbose_name='NOME DOCUMENTO')
+    doc_type = models.ForeignKey(DocT, on_delete=models.CASCADE, verbose_name='CÓDIGO DOC')
+    format_doc = models.ForeignKey(Pageformat, on_delete=models.CASCADE, verbose_name='FORMATO DO DOCUMENTO')
+    doc_type_page = models.ForeignKey(PageT, on_delete=models.CASCADE, verbose_name='TIPO PÁGINA')
     #user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_doc = models.DateTimeField(auto_now_add=True)
     update_doc = models.DateTimeField(auto_now=True)
-  
+
+
     def __str__(self):
         return self.documment_name
 
 
 class Employee(models.Model): #Lista de Funcionários
 
-    emp_name = models.CharField(max_length=255)
-    emp_office = models.CharField(max_length=255)
-    emp_contrato = models.CharField(max_length=20)
-    photo = models.FileField(upload_to='uploads/photos/', blank=True, null=True)
+    emp_name = models.CharField(max_length=255, verbose_name='NOME DO COLABORADOR')
+    emp_office = models.CharField(max_length=255, verbose_name='FUNÇÃO')
+    emp_contrato = models.CharField(max_length=20, verbose_name='CONTRATO')
+    photo = models.FileField(upload_to='uploads/photos/', blank=True, null=True, verbose_name='FOTO')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='USUÁRIO')
     created_emp = models.DateTimeField(auto_now_add=True)
     update_emp = models.DateTimeField(auto_now=True)
 
@@ -104,16 +107,16 @@ class Action(models.Model): #Lista de Acões
 
 class Cotation(models.Model): #Lista de Acões DocT
     
-    proj_name = models.ForeignKey(MyProject, on_delete=models.CASCADE)
-    subject_name = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    doc_name_pattern = models.ForeignKey(DocumentStandard, on_delete=models.CASCADE)
-    doc_name = models.CharField(max_length=255, blank=True, null=True)
-    cod_doc_type = models.ForeignKey(DocT, on_delete=models.CASCADE)
-    page_type = models.ForeignKey(PageT, on_delete=models.CASCADE)
-    format_doc = models.ForeignKey(Pageformat, on_delete=models.CASCADE)
-    qt_page = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True)
-    qt_hh = models.DecimalField(max_digits=5, decimal_places=0, blank=True, null=True)
-    cost_doc = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
+    proj_name = models.ForeignKey(MyProject, on_delete=models.CASCADE, verbose_name='PROJETO')
+    subject_name = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='DISCIPLINA')
+    doc_name_pattern = models.ForeignKey(DocumentStandard, on_delete=models.CASCADE, verbose_name='DOCUMENTO BASE')
+    doc_name = models.CharField(max_length=255, blank=True, null=True, verbose_name='NOME DOCUMENTO')
+    cod_doc_type = models.ForeignKey(DocT, on_delete=models.CASCADE, verbose_name='CÓDIGO DOC')
+    page_type = models.ForeignKey(PageT, on_delete=models.CASCADE, verbose_name='TIPO PÁGINA')
+    format_doc = models.ForeignKey(Pageformat, on_delete=models.CASCADE, verbose_name='FORMATO')
+    qt_page = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True, verbose_name='QT PÁGINA')
+    qt_hh = models.DecimalField(max_digits=5, decimal_places=0, blank=True, null=True, verbose_name='QT HH')
+    cost_doc = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='CUSTO DOCUMENTO')
     created_ct = models.DateTimeField(auto_now_add=True)
     update_ct = models.DateTimeField(auto_now=True)
   
@@ -122,7 +125,7 @@ class Cotation(models.Model): #Lista de Acões DocT
 
 
 class Upload(models.Model): #Upload de arquivos
-    arq = models.FileField(upload_to='uploads/')
+    arq = models.FileField(upload_to='uploads/', help_text='localizar Arquivo')
     update_arq = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -138,3 +141,25 @@ class ProjectValue(models.Model): #Upload de arquivos
     def __str__(self):
         return str(self.cost_by_hh)
 
+
+
+
+
+
+
+
+
+
+'''Rename Collumns
+class Migration:
+
+    def forwards(self, orm):
+        # Rename 'name' field to 'full_name'
+        db.rename_column('app_foo', 'name', 'full_name')
+
+
+
+
+    def backwards(self, orm):
+        # Rename 'full_name' field to 'name'
+        db.rename_column('app_foo', 'full_name', 'name')'''

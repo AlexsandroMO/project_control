@@ -31,7 +31,7 @@ def dataTable(request):
     return render(request, 'documentation/datatable.html', {'MyProjects': MyProjects, 'DocumentStandards': DocumentStandards, 'Actions': Actions, 'StatusDocs':StatusDocs, 'Employees':Employees, 'Cotations':Cotations})
 
 
-
+@login_required
 def index(request):
 
     MyProjects = MyProject.objects.all().order_by('project_name')
@@ -40,8 +40,16 @@ def index(request):
     StatusDocs = StatusDoc.objects.all().order_by('-doc_status')
     Employees = Employee.objects.all().order_by('-emp_name')
     Cotations = Cotation.objects.all().order_by('-proj_name')
+    colab = request.user
+    colaborador = ''
+    photo_colab = ''
 
-    return render(request, 'documentation/index.html', {'MyProjects': MyProjects, 'DocumentStandards': DocumentStandards, 'Actions': Actions, 'StatusDocs':StatusDocs, 'Employees':Employees, 'Cotations':Cotations})
+    for a in Employees:
+        if colab == a.user:
+            colaborador = a.emp_name
+            photo_colab = a.photo
+
+    return render(request, 'documentation/index.html', {'MyProjects': MyProjects, 'DocumentStandards': DocumentStandards, 'Actions': Actions, 'StatusDocs':StatusDocs, 'Employees':Employees, 'Cotations':Cotations, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
 
 def projectlist(request):
@@ -76,7 +84,8 @@ def Doctypelist(request):
     return render(request, 'documentation/doc-type.html', {'docts': docts})
 
 
-#@login_required
+
+@login_required
 def docummentypelist(request):
     
     #Document = DocumentStandard.objects.all().order_by('doc_type').filter(user=request.user)
@@ -89,10 +98,19 @@ def docummentypelist(request):
 
     #paginator = Paginator(Document, 20)
     #page = request.GET.get('page')
-
     #DocumentStandards = paginator.get_page(page)
 
-    return render(request, 'documentation/tipos-documentos.html', {'Document': Document, 'MyProjects': MyProjects, 'Subjects': Subjects, 'Employees':Employees, 'len_doc':len_doc})
+    colab = request.user
+
+    colaborador = ''
+    photo_colab = ''
+
+    for a in Employees:
+        if colab == a.user:
+            colaborador = a.emp_name
+            photo_colab = a.photo
+
+    return render(request, 'documentation/tipos-documentos.html', {'Document': Document, 'MyProjects': MyProjects, 'Subjects': Subjects, 'Employees':Employees, 'len_doc':len_doc, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
 
 
@@ -162,6 +180,7 @@ def Cotationlist(request):
     MyProjects = MyProject.objects.all().order_by('project_name')
     Subjects = Subject.objects.all().order_by('subject_name')
     DocumentStandards = DocumentStandard.objects.all()
+    Employees = Employee.objects.all().order_by('-emp_name')
 
     calc = []
     for i in Cotations:
@@ -170,9 +189,18 @@ def Cotationlist(request):
 
     total = sum(calc)
 
-    print(total)
+    colab = request.user
 
-    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total})
+    colaborador = ''
+    photo_colab = ''
+
+    for a in Employees:
+        if colab == a.user:
+            colaborador = a.emp_name
+            photo_colab = a.photo
+
+
+    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
 
 
@@ -180,7 +208,7 @@ def Cotationlist(request):
 def Cotationlist_filter(request):
 
     print(request.GET)
-    
+
     #GET['proj']
     
     Cota = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
@@ -188,14 +216,14 @@ def Cotationlist_filter(request):
     Subjects = Subject.objects.all().order_by('subject_name')
     DocumentStandards = DocumentStandard.objects.all()
 
-    filter_cota = Cota.objects.all().filter(proj_name='Projeto Porto Novo', subject_name='CFTV')
+    Cotations = Cota.objects.all().filter(proj_name='Projeto Porto Novo', subject_name='CFTV')
 
-    for i in filter_cota:
+    for i in Cotations:
         print(i.proj_name, i.subject_name)
 
 
     calc = []
-    for i in filter_cota:
+    for i in Cotations:
         print(i.cost_doc)
         calc.append(i.cost_doc)
 

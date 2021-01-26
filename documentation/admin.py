@@ -19,7 +19,7 @@ class DocTAdmin(admin.ModelAdmin):
 
 class DocumentStandardAdmin(admin.ModelAdmin):
     fields = ('documment_name', 'doc_type','format_doc','doc_type_page')
-    list_display = ('id','documment_name', 'doc_type','format_doc','doc_type_page','created_doc','update_doc')
+    list_display = ('id','documment_name', 'doc_type','format_doc','doc_type_page')
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -29,10 +29,9 @@ class SubjectAdmin(admin.ModelAdmin):
 
 class CotationAdmin(admin.ModelAdmin):
     fields = ('proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'qt_hh','cost_doc')
-    list_display = ('proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'qt_hh','cost_doc','created_ct','update_ct') 
+    list_display = ('id','proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'qt_hh','cost_doc') 
 
 
- 
 class UploadAdmin(admin.ModelAdmin):
     fields = ('arq',)
     list_display = ('arq', 'update_arq')
