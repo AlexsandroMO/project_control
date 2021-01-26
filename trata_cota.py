@@ -56,11 +56,11 @@ def cria_orc_ind(GET):
         c.execute(qsl_datas)
         conn.commit()
         conn.close()
-
-    
-    for i in range(1,len(GET['action'])):
+ 
+    print('--------', len(GET['action']))
+    for i in range(len(GET['action'])):
         readed = read_sql_doc(GET['action'][i])
-        print('>>>id>>>', readed['id'])
+        print('>>>id>>>')
         #print('>>>doc>>>', readed['documment_name'][0])
         #print('>>>type>>>', readed['doc_type_id'])
         #print('>>>page>>>', readed['doc_type_page_id'])
@@ -68,13 +68,12 @@ def cria_orc_ind(GET):
         #print('>>>>date>>', date_today)
 
         cria_cota(int(GET['proj'][0]), int(GET['sub'][0]), int(readed['id']),readed['documment_name'][0], int(readed['doc_type_id']),int(readed['doc_type_page_id']),int(readed['format_doc_id']),date_today)
+        #print('>>>>date>>', date_today)
 
 
 
 def calc_cota(Cotations, Values, GET):
 
-    #def cota_cost(id_,proj_name,subject_name,doc_name_pattern,doc_name_,cod_doc_type,page_type,format_doc,qt_page,qt_hh,cost_doc,created_ct,update_ct):
-    
     def cota_cost(id_cota, cost):
         try:
             sqliteConnection = sqlite3.connect('db.sqlite3')
@@ -97,6 +96,7 @@ def calc_cota(Cotations, Values, GET):
             if (sqliteConnection):
                 sqliteConnection.close()
                 print("The sqlite connection is closed")
+
 
     if GET['cota']:
         if GET['cota'][0] == '1':

@@ -22,6 +22,7 @@ urlpatterns = [
     path('PageT/', views.Pagetypelist, name='page-t'),
     path('DocT/', views.Doctypelist, name='doc-t'),
     path('createLD/', views.Create_LD, name='create-LD'),
+    path('LD_Proj/', views.LD_Proj, name='ld-projeto'),
     path('CalcCota/', views.Calc_Cota, name='calc-cota'),
     path('upload/', views.Uploadlists, name='upload-list'),
 

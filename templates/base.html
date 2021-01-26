@@ -33,10 +33,19 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url 'documment-type-list' %}" class="nav-link">Home</a>
+        <a href="/" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url 'cotation-list' %}" class="nav-link">Contact</a>
+        <a href="{% url 'documment-type-list' %}" class="nav-link">Lista de Documentos</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'cotation-list' %}" class="nav-link">Cotations</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'ld-projeto' %}" class="nav-link">LD</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'logout' %}" class="nav-link">LogOut</a>
       </li>
     </ul>
 

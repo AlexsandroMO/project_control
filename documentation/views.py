@@ -174,6 +174,34 @@ def Uploadlists(request):
 
 
 #---------------------------------------------------------------
+def LD_Proj(request):
+
+    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+    MyProjects = MyProject.objects.all().order_by('project_name')
+    Subjects = Subject.objects.all().order_by('subject_name')
+    DocumentStandards = DocumentStandard.objects.all()
+    Employees = Employee.objects.all().order_by('-emp_name')
+
+    colab = request.user
+
+    colaborador = ''
+    photo_colab = ''
+
+    for a in Employees:
+        if colab == a.user:
+            colaborador = a.emp_name
+            photo_colab = a.photo
+
+
+    return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'colaborador':colaborador, 'photo_colab':photo_colab})
+
+
+
+
+
+
+
+#---------------------------------------------------------------
 def Cotationlist(request):
 
     Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
@@ -275,10 +303,7 @@ def DeleteCotation(request, id):
 
 def Create_LD(request):
 
-    #MyProjects = MyProject.objects.all()
     DocumentStandards = DocumentStandard.objects.all()
-    #Subjects = Subject.objects.all()
-    #Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
 
     if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
         
@@ -290,12 +315,14 @@ def Create_LD(request):
             return redirect('cotation-list')
 
         elif dict(request.GET)['action'][0] != 'All':
+            print('>>>>>>>>>>>>>>>>>>>', dict(request.GET))
             LDcreate.cria_orc_ind(GET)
 
             return redirect('cotation-list')
 
 
-    return redirect('documment-type-list')
+    else:
+        return redirect('documment-type-list')
 
 
 
@@ -359,7 +386,7 @@ def Create_PL(request): #Uso admin /CreatePL
     form_ac = ActionForm()
 
     execute = CODE.cria_tabelas(MyProjects,PageTs,DocTs,DocumentStandards,Subjects,Actions,StatusDocs,Employees,form_proj,form_dis,form_paget,form_doct,form_format,form_doc,form_func,form_st,form_ac)
-    print(execute)
+    #print(execute)
 
     return redirect('/')
 

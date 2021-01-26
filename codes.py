@@ -127,6 +127,5 @@ def cria_tabelas(MyProjects,PageTs,DocTs,DocumentStandards,Subjects,Actions,Stat
         cria_doc(doc_name, code_doc, format_doc, doc_type)
 
 
-
     return 'feito!'
 
