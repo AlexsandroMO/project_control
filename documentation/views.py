@@ -6,6 +6,8 @@ from .forms import MyProjectForm, SubjectForm, PageTForm, DocTForm, PageformatFo
 from django.contrib import messages
 from .models import MyProject, PageT, DocT, DocumentStandard, Subject, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue
 
+from django.utils.formats import localize
+
 import codes as CODE
 import trata_cota as LDcreate
 import delete_itens
@@ -182,6 +184,31 @@ def LD_Proj(request):
     DocumentStandards = DocumentStandard.objects.all()
     Employees = Employee.objects.all().order_by('-emp_name')
 
+    calc = []
+    for i in Cotations:
+        print(i.cost_doc)
+        calc.append(i.cost_doc)
+
+    total = localize(sum(calc))
+
+    x = str(total)
+    n = x.split()
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', total, n)
+    print('>>>>>>>>>>>>', n)
+
+    if len(n[0]) > 7:
+        fim = n[0][-6::]
+        meio = n[0][:len(n[0])-6:]
+        print('  <<>fim<:> ',fim)
+        print('  <<>meio><:> ',meio)
+
+        if len(meio) > 4:
+            print(n[0][-6::])
+    
+    for i in n[0]:
+        print('--: ',i)
+
+
     colab = request.user
 
     colaborador = ''
@@ -193,7 +220,7 @@ def LD_Proj(request):
             photo_colab = a.photo
 
 
-    return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'colaborador':colaborador, 'photo_colab':photo_colab})
+    return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
 
 
