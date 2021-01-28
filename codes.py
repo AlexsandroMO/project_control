@@ -7,6 +7,43 @@ from datetime import datetime
 import xlrd
 import openpyxl
 
+def financial(var):
+
+  start, middle, middle2, tip, result = '','','','',''
+
+  if len(var[0]) > 9:
+    start = var[0][-6::]
+    middle = var[0][:len(var[0])-6:]
+
+    if len(middle) > 3:
+      middle2 = middle[-3::]
+      tip = middle[:len(middle)-7:]
+
+    result = '{}.{}.{}'.format(tip, middle2, start)
+      
+
+  elif len(var[0]) <= 9 and len(var[0]) > 6:
+    start = var[0][-6::]
+    middle = var[0][:len(var[0])-6:]
+
+    result = '{}.{}'.format(middle, start)
+
+  elif len(n[0]) <= 6:
+    start = var[0][-6::]
+    middle = var[0][:len(var[0])-6:]
+
+    result = '{}'.format(start)
+
+
+  #result = result.replace(',','.')
+  return result
+
+
+
+
+
+
+
 
 def cria_tabelas(MyProjects,PageTs,DocTs,DocumentStandards,Subjects,Actions,StatusDocs,Employees,form_proj,form_dis,form_paget,form_doct,form_format,form_doc,form_func,form_st,form_ac):
 

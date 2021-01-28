@@ -184,33 +184,20 @@ def LD_Proj(request):
     DocumentStandards = DocumentStandard.objects.all()
     Employees = Employee.objects.all().order_by('-emp_name')
 
+    #----------------------
     calc = []
     for i in Cotations:
         print(i.cost_doc)
         calc.append(i.cost_doc)
 
     total = localize(sum(calc))
+    total = str(total)
+    total = total.split()
 
-    x = str(total)
-    n = x.split()
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', total, n)
-    print('>>>>>>>>>>>>', n)
+    total = CODE.financial(total)
 
-    if len(n[0]) > 7:
-        fim = n[0][-6::]
-        meio = n[0][:len(n[0])-6:]
-        print('  <<>fim<:> ',fim)
-        print('  <<>meio><:> ',meio)
-
-        if len(meio) > 4:
-            print(n[0][-6::])
-    
-    for i in n[0]:
-        print('--: ',i)
-
-
+    #----------------------
     colab = request.user
-
     colaborador = ''
     photo_colab = ''
 
@@ -219,6 +206,7 @@ def LD_Proj(request):
             colaborador = a.emp_name
             photo_colab = a.photo
 
+    #----------------------
 
     return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
@@ -237,13 +225,19 @@ def Cotationlist(request):
     DocumentStandards = DocumentStandard.objects.all()
     Employees = Employee.objects.all().order_by('-emp_name')
 
+    #----------------------
     calc = []
     for i in Cotations:
         print(i.cost_doc)
         calc.append(i.cost_doc)
 
-    total = sum(calc)
+    total = localize(sum(calc))
+    total = str(total)
+    total = total.split()
 
+    total = CODE.financial(total)
+
+    #----------------------
     colab = request.user
 
     colaborador = ''
@@ -253,7 +247,8 @@ def Cotationlist(request):
         if colab == a.user:
             colaborador = a.emp_name
             photo_colab = a.photo
-
+            
+    #----------------------
 
     return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
@@ -283,6 +278,9 @@ def Cotationlist_filter(request):
         calc.append(i.cost_doc)
 
     total = sum(calc)
+    total = str(total)
+    total = total.split(',','.')
+    total = float(total)
 
     print(total)
 

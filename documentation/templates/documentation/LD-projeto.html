@@ -52,12 +52,12 @@
                     <td>{{cota.proj_name}}</a></td>
                     <td>{{cota.subject_name}}</td>
                     <td class="field-proj_name nowrap"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.doc_name}}</a></td>
-                    <td>{{cota.cod_doc_type}}</td>
+                    <td >{{cota.cod_doc_type}}</td>
                     <td>{{cota.format_doc}}</td>
                     <td>{{cota.page_type}}</td>
                     <td>{{cota.qt_page}}</td>
                     <td>{{cota.qt_hh}}</td>
-                    <td>R$ {{cota.cost_doc}}</td>
+                    <td id="num-convert">R$ {{cota.cost_doc}}</td>
                     <td>-</td>
                   </tr>
                   {% endfor %}

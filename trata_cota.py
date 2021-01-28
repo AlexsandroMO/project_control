@@ -7,6 +7,10 @@ from datetime import datetime
 from decimal import *
 import time
 
+from django.utils.formats import localize
+
+import codes as CODE
+
 
 date_today = datetime.today()
 
@@ -102,25 +106,22 @@ def calc_cota(Cotations, Values, GET):
         if GET['cota'][0] == '1':
             print('foi! 1')
             for i in Cotations:
-                print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+                #print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
                 cost = Values[0].cost_by_doc * i.qt_page
-                print(cost)
                 cota_cost(i.id, cost)
 
         if GET['cota'][0] == '2':
             print('foi! 2')
             for i in Cotations:
-                print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+                #print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
                 cost = Values[0].cost_by_hh * i.qt_hh
-                print(cost)
                 cota_cost(i.id, cost)
 
         if GET['cota'][0] == '3':
             print('foi! 3')
             for i in Cotations:
-                print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
+                #print('::::', i.id,i.proj_name_id,i.subject_name_id,i.doc_name_pattern_id,i.doc_name,i.cod_doc_type_id,i.page_type_id,i.format_doc_id,i.qt_page,i.qt_hh,i.cost_doc,i.created_ct,i.update_ct)
                 cost = 0 #Values[0].cost_by_A1
-                print(cost)
                 cota_cost(i.id, cost)
 
 
