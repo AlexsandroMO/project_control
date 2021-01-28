@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import MyProject, Subject, DocumentStandard, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue, PageT, DocT, Pageformat
+from . models import MyProject, Subject, DocumentStandard, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue, PageT, DocT, Pageformat, LdProj
 
 
 class MyProjectAdmin(admin.ModelAdmin):
@@ -32,6 +32,11 @@ class CotationAdmin(admin.ModelAdmin):
     list_display = ('id','proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'qt_hh','cost_doc') 
 
 
+class LdProjAdmin(admin.ModelAdmin):
+    fields = ('proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'status','responsible','elab','verif','aprov','emiss','date')
+    list_display = ('id','proj_name', 'subject_name', 'doc_name_pattern','doc_name', 'cod_doc_type','page_type','format_doc','qt_page', 'status','responsible','elab','verif','aprov','emiss','date') 
+
+
 class UploadAdmin(admin.ModelAdmin):
     fields = ('arq',)
     list_display = ('arq', 'update_arq')
@@ -59,6 +64,7 @@ admin.site.register(Action)
 admin.site.register(StatusDoc)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Cotation, CotationAdmin)
+admin.site.register(LdProj, LdProjAdmin)
 admin.site.register(Upload)
 admin.site.register(ProjectValue, ProjectValueAdmin)
 admin.site.register(PageT, PageTAdmin)

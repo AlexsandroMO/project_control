@@ -169,7 +169,7 @@
                   <div class="form-group">
                     <label>Projeto
                     <select class="form-control select2 select2-hidden-accessible" name="proj">
-                      <option selected="selected" data-select2-id="3" value="0">Selecione Projeto</option>
+                      <option selected="selected" value="0">Selecione Projeto</option>
                         {% for proj in MyProjects %}
                           <option value={{proj.id}}>{{proj.project_name}}</option>
                         {% endfor%}
@@ -177,7 +177,7 @@
 
                     <label>Disciplina
                     <select class="form-control select2 select2-hidden-accessible" name="sub">
-                      <option selected="selected" data-select2-id="3" value="0">Selecione Disiciplina</option>
+                      <option selected="selected" value="0">Selecione Disiciplina</option>
                         {% for sub in Subjects %}
                         <option value={{sub.id}}>{{sub.subject_name}}</option>
                         {% endfor%}

@@ -124,6 +124,30 @@ class Cotation(models.Model): #Lista de Acões DocT
         return str(self.proj_name)
 
 
+class LdProj(models.Model): #Lista de Documentos
+    
+    proj_name = models.ForeignKey(MyProject, on_delete=models.CASCADE, verbose_name='PROJETO')
+    subject_name = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='DISCIPLINA')
+    doc_name_pattern = models.ForeignKey(DocumentStandard, on_delete=models.CASCADE, verbose_name='DOCUMENTO BASE')
+    doc_name = models.CharField(max_length=255, blank=True, null=True, verbose_name='NOME DOCUMENTO')
+    cod_doc_type = models.ForeignKey(DocT, on_delete=models.CASCADE, verbose_name='CÓDIGO DOC')
+    page_type = models.ForeignKey(PageT, on_delete=models.CASCADE, verbose_name='TIPO PÁGINA')
+    format_doc = models.ForeignKey(Pageformat, on_delete=models.CASCADE, verbose_name='FORMATO')
+    qt_page = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True, verbose_name='QT PÁGINA')
+    status = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='STATUS_PROJETO')
+    responsible = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='responseible', verbose_name='RESPONSÁVEL')
+    elab = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='elab', verbose_name='ELABORADOR')
+    verif = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='verif', verbose_name='VERIFICADOR')
+    aprov = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='aprov', verbose_name='APROVADOR')
+    emiss = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='emiss', verbose_name='EMISSOR')
+    date = models.DateField(blank=True, null=True)
+    created_ct = models.DateTimeField(auto_now_add=True)
+    update_ct = models.DateTimeField(auto_now=True)
+  
+    def __str__(self):
+        return str(self.proj_name)
+
+        
 class Upload(models.Model): #Upload de arquivos
     arq = models.FileField(upload_to='uploads/', help_text='localizar Arquivo')
     update_arq = models.DateTimeField(auto_now=True)

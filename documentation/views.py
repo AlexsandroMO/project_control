@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .forms import MyProjectForm, SubjectForm, PageTForm, DocTForm, PageformatForm, DocumentStandardForm, EmployeeForm, StatusDocForm, ActionForm, CotationForm
 from django.contrib import messages
-from .models import MyProject, PageT, DocT, DocumentStandard, Subject, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue
+from .models import MyProject, PageT, DocT, DocumentStandard, Subject, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue, LdProj
 
 from django.utils.formats import localize
 
@@ -175,46 +175,6 @@ def Uploadlists(request):
 
 
 
-#---------------------------------------------------------------
-def LD_Proj(request):
-
-    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
-    MyProjects = MyProject.objects.all().order_by('project_name')
-    Subjects = Subject.objects.all().order_by('subject_name')
-    DocumentStandards = DocumentStandard.objects.all()
-    Employees = Employee.objects.all().order_by('-emp_name')
-
-    #----------------------
-    calc = []
-    for i in Cotations:
-        print(i.cost_doc)
-        calc.append(i.cost_doc)
-
-    total = localize(sum(calc))
-    total = str(total)
-    total = total.split()
-
-    total = CODE.financial(total)
-
-    #----------------------
-    colab = request.user
-    colaborador = ''
-    photo_colab = ''
-
-    for a in Employees:
-        if colab == a.user:
-            colaborador = a.emp_name
-            photo_colab = a.photo
-
-    #----------------------
-
-    return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
-
-
-
-
-
-
 
 #---------------------------------------------------------------
 def Cotationlist(request):
@@ -257,19 +217,29 @@ def Cotationlist(request):
 #@login_required
 def Cotationlist_filter(request):
 
-    print(request.GET)
+    print('>>>>>>>>>>>>>>>>>>>',dict(request.GET))
 
-    #GET['proj']
-    
-    Cota = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
     MyProjects = MyProject.objects.all().order_by('project_name')
     Subjects = Subject.objects.all().order_by('subject_name')
+    Cota = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
     DocumentStandards = DocumentStandard.objects.all()
 
-    Cotations = Cota.objects.all().filter(proj_name='Projeto Porto Novo', subject_name='CFTV')
+    GET = dict(request.GET)
 
-    for i in Cotations:
-        print(i.proj_name, i.subject_name)
+    if dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
+        print('entrou!!!', GET['proj'], GET['sub'])
+
+        print(GET['proj'][0])
+
+        proj = GET['proj'][0]
+        sub = GET['sub'][0]
+
+        print(type(proj))
+
+        Cotations = Cota.objects.filter(proj_name=int(proj), subject_name=int(sub))
+
+        for i in Cotations:
+            print('-----: ',i)
 
 
     calc = []
@@ -284,7 +254,7 @@ def Cotationlist_filter(request):
 
     print(total)
 
-    return render(request, 'documentation/cotation.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total})
+    return render(request, 'documentation/cotation-filter.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total})
 
 
 
@@ -321,12 +291,46 @@ def DeleteCotation(request, id):
 
     return redirect('/')
 
-
 #---------------------------------------------------------------
+def LD_Proj(request):
+
+    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+    MyProjects = MyProject.objects.all().order_by('project_name')
+    Subjects = Subject.objects.all().order_by('subject_name')
+    DocumentStandards = DocumentStandard.objects.all()
+    Employees = Employee.objects.all().order_by('-emp_name')
+    #LD_Proj = LdProj.objects.all().order_by('-doc_name')
+
+    #----------------------
+    calc = []
+    for i in Cotations:
+        print(i.cost_doc)
+        calc.append(i.cost_doc)
+
+    total = localize(sum(calc))
+    total = str(total)
+    total = total.split()
+
+    total = CODE.financial(total)
+
+    #----------------------
+    colab = request.user
+    colaborador = ''
+    photo_colab = ''
+
+    for a in Employees:
+        if colab == a.user:
+            colaborador = a.emp_name
+            photo_colab = a.photo
+
+    #----------------------
+
+    return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
 
 
-def Create_LD(request):
+
+def Create_Cotation(request):
 
     DocumentStandards = DocumentStandard.objects.all()
 
@@ -351,7 +355,34 @@ def Create_LD(request):
 
 
 
-def Create_Cotation(request):
+def Create_LD(request):
+
+    DocumentStandards = DocumentStandard.objects.all()
+    print('>>>>>>>>>>>>>>>>>>>',dict(request.GET))
+
+    if len(dict(request.GET)) == 3 and dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
+        
+        GET = dict(request.GET)
+
+        if dict(request.GET)['action'][0] == 'All':
+            LDcreate.cria_orc_all(GET,DocumentStandards)
+
+            return redirect('ld-projeto')
+
+        elif dict(request.GET)['action'][0] != 'All':
+            
+            #LDcreate.cria_orc_ind(GET)
+
+            return redirect('ld-projeto')
+
+
+    else:
+        return redirect('cotation-list')
+
+
+
+
+'''def Create_Cotation(request):
 
     cost = ProjectValue.objects.all()
 
@@ -373,7 +404,7 @@ def Create_Cotation(request):
 
     LDcreate.trata_cotation(str(val), cost_type)
 
-    return redirect('cotation-list')
+    return redirect('cotation-list')'''
 
 
 
@@ -386,6 +417,23 @@ def Calc_Cota(request):
     LDcreate.calc_cota(Cotations, Values, GET)
 
     return redirect('cotation-list')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -429,6 +477,46 @@ def Create_PL(request): #Uso admin /CreatePL
 
 
 '''
+
+
+#---------------------------------------------------------------
+def LD_Proj(request):
+
+    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+    MyProjects = MyProject.objects.all().order_by('project_name')
+    Subjects = Subject.objects.all().order_by('subject_name')
+    DocumentStandards = DocumentStandard.objects.all()
+    Employees = Employee.objects.all().order_by('-emp_name')
+
+    #----------------------
+    calc = []
+    for i in Cotations:
+        print(i.cost_doc)
+        calc.append(i.cost_doc)
+
+    total = localize(sum(calc))
+    total = str(total)
+    total = total.split()
+
+    total = CODE.financial(total)
+
+    #----------------------
+    colab = request.user
+    colaborador = ''
+    photo_colab = ''
+
+    for a in Employees:
+        if colab == a.user:
+            colaborador = a.emp_name
+            photo_colab = a.photo
+
+    #----------------------
+
+    return render(request, 'documentation/LD-projeto.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
+
+
+
+
 def Create_LD(request):
 
     MyProjects = MyProject.objects.all()
