@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import MyProject, PageT, DocT, DocumentStandard, Subject, Action, StatusDoc, Employee, Cotation, Upload, ProjectValue, LdProj
 
 from django.utils.formats import localize
+from django.db.models import Q
 
 import codes as CODE
 import trata_cota as LDcreate
@@ -188,7 +189,6 @@ def Cotationlist(request):
     #----------------------
     calc = []
     for i in Cotations:
-        print(i.cost_doc)
         calc.append(i.cost_doc)
 
     total = localize(sum(calc))
@@ -217,44 +217,54 @@ def Cotationlist(request):
 #@login_required
 def Cotationlist_filter(request):
 
-    print('>>>>>>>>>>>>>>>>>>>',dict(request.GET))
-
     MyProjects = MyProject.objects.all().order_by('project_name')
     Subjects = Subject.objects.all().order_by('subject_name')
-    Cota = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
+    Cotations = Cotation.objects.all().order_by('subject_name').order_by('doc_name').order_by('proj_name')
     DocumentStandards = DocumentStandard.objects.all()
+    Employees = Employee.objects.all().order_by('-emp_name')
 
     GET = dict(request.GET)
 
     if dict(request.GET)['proj'][0] != '0' and dict(request.GET)['sub'][0] != '0':
-        print('entrou!!!', GET['proj'], GET['sub'])
 
-        print(GET['proj'][0])
+        proj = int(GET['proj'][0])
+        sub = int(GET['sub'][0])
 
-        proj = GET['proj'][0]
-        sub = GET['sub'][0]
+        Cotations = Cotations.filter(proj_name__id=1, subject_name__id=sub)
 
-        print(type(proj))
+        #Cotations = Cotation.objects.filter(proj_name__id=proj, subject_name__id=sub)
+        #assuntos_da_categoria = Assunto.objects.filter(categoria__id=1)
+        
+        #, subject_name__id=sub)
+        #User.objects.filter(Q(email='ricky@gmail.com') & Q(email='john@gmail.com'))
 
-        Cotations = Cota.objects.filter(proj_name=int(proj), subject_name=int(sub))
-
+        #----------------------
+        calc = []
         for i in Cotations:
-            print('-----: ',i)
+            calc.append(i.cost_doc)
 
+        total = localize(sum(calc))
+        total = str(total)
+        total = total.split()
 
-    calc = []
-    for i in Cotations:
-        print(i.cost_doc)
-        calc.append(i.cost_doc)
+        total = CODE.financial(total)
 
-    total = sum(calc)
-    total = str(total)
-    total = total.split(',','.')
-    total = float(total)
+        #----------------------
+        colab = request.user
 
-    print(total)
+        colaborador = ''
+        photo_colab = ''
 
-    return render(request, 'documentation/cotation-filter.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total})
+        for a in Employees:
+            if colab == a.user:
+                colaborador = a.emp_name
+                photo_colab = a.photo
+                
+        #----------------------
+    else:
+        return redirect('cotation-list')
+
+    return render(request, 'documentation/cotation-filter.html', {'Cotations':Cotations, 'DocumentStandards':DocumentStandards, 'MyProjects':MyProjects, 'Subjects':Subjects, 'total':total, 'colaborador':colaborador, 'photo_colab':photo_colab})
 
 
 

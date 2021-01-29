@@ -17,12 +17,12 @@ urlpatterns = [
     path('cotation/', views.Cotationlist, name='cotation-list'),
     path('cotationFilter/', views.Cotationlist_filter, name='cotation-list-filter'),
     path('edite_cotation/<int:id>', views.EditeCotation, name='edite-cota'),
+    path('LD_Proj/', views.LD_Proj, name='ld-projeto'),
     path('CreatePL/', views.Create_PL, name='Create-PL'),
     path('CreateCota/', views.Create_Cotation, name='Create-cota'),
     path('PageT/', views.Pagetypelist, name='page-t'),
     path('DocT/', views.Doctypelist, name='doc-t'),
     path('createLD/', views.Create_LD, name='create-LD'),
-    path('LD_Proj/', views.LD_Proj, name='ld-projeto'),
     path('CalcCota/', views.Calc_Cota, name='calc-cota'),
     path('upload/', views.Uploadlists, name='upload-list'),
 

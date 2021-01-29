@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Cotação{% endblock %}
+{% block title %}LD{% endblock %}
 {% block content %}
 
   <!-- Main content -->
@@ -10,75 +10,8 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Cotação de Projetos</h3>
+              <h3 class="card-title">Lista de Documentos de Projetos</h3>
             </div>
-            
-            
-            <form action="{% url 'calc-cota' %}" method="GET"> 
-
-              <div class="card card-default collapsed-card">
-                <div class="card-header">
-                  <h3 class="card-title">Selecionar Tipo de Cotação</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"> <!-- onclick="status_checkbox()"> -->
-                      <i class="fas fa-plus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- /.card-header -->
-                <div class="card-body" style="display: none;">
-                  <div class="row">
-                    <div class="col-md-6" data-select2-id="29">
-                      <div class="form-group">
-
-                <div class="form-group clearfix" name="cota">
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="checkboxPrimary1" name="cota" value="1">
-                    <label for="checkboxPrimary1">
-                      Cotação por Qt Páginas
-                    </label>
-                  </div>
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="checkboxPrimary2" name="cota" value="2">
-                    <label for="checkboxPrimary2">
-                      Cotação por HH
-                    </label>
-                  </div>
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="checkboxPrimary3" name="cota" value="3"> <!-- disabled="">  checked="" -->
-                    <label for="checkboxPrimary3">
-                      Cotação por A1 Equivalente
-                      </label>
-                    </div>
-
-                    <button type="submit" class="btn btn-info">Cotar</button>
-
-                    <input type="checkbox" id="checkboxPrimary2" name="cota" value="x" checked="">
-
-                </div>
-
-                      </div>
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer" style="display: none;">
-                  Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                  the plugin.
-                </div>
-              </div>
-
-
-          </form>
-   
-            <!-- /.card-header -->
             
             <div class="card-body">
             <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info"> <!-- class="table table-striped table-bordered" -->
@@ -92,16 +25,16 @@
                       </div>
                     <div class="clear"></div>
                     </th>
-                    <th scope="col" class="sortable column-proj_name" id="col-name-proj">NOME DO PROJETO</th>
+                    <th id="col-name-proj">NOME DO PROJETO</th>                  <!--scope="col" class="sortable column-proj_name" -->
                     <th id="col-disc">DISCIPLINA</th>
-                    <th id="col-doc-name">NOME DO DOCUMENTO</th>
+                    <th id="col-doc-name" >NOME DO DOCUMENTO</th>
                     <th id="col-cod">CÓD. DOC.</th>
                     <th id="col-ex-doc">EXT. DOC.</th>
                     <th id="col-type-page">TIPO DE FOLHA</th>
                     <th id="col-qt">QT. FOLHA</th>
                     <th id="col-qt">QT. HH</th>
                     <th id="col-page-coust">CUSTO DOC.</th>
-                    <th></th>
+                    <th>-</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -113,16 +46,16 @@
                           <input class="marcar" type="checkbox" name="action" value="{{doc.id}}" >
                       </div>
                     </td> 
-                    <td id="col-nome-proj" class="field-proj_name nowrap"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.proj_name}}</a></td>
+                    <td>{{cota.proj_name}}</a></td>
                     <td>{{cota.subject_name}}</td>
-                    <td>{{cota.doc_name}}</td>
-                    <td>{{cota.cod_doc_type}}</td>
+                    <td class="field-proj_name nowrap"><a href="http://127.0.0.1:8000/edite_cotation/{{cota.id}}">{{cota.doc_name}}</a></td>
+                    <td >{{cota.cod_doc_type}}</td>
                     <td>{{cota.format_doc}}</td>
                     <td>{{cota.page_type}}</td>
                     <td>{{cota.qt_page}}</td>
                     <td>{{cota.qt_hh}}</td>
-                    <td>R$ {{cota.cost_doc}}</td>
-                    <td></td>
+                    <td id="num-convert">R$ {{cota.cost_doc}}</td>
+                    <td>-</td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -138,6 +71,7 @@
                   <th></th>
                   <th></th>
                   <th>R$ {{total}}</th>
+                  <th>-</th>
                 </tr>
                 </tfoot>
 
@@ -159,9 +93,13 @@
               </div>
             </div>
             <!-- /.card-header -->
+            
+
             <div class="card-body" style="display: none;">
               <div class="row">
                 <div class="col-md-6" data-select2-id="29">
+
+                  <form action="{% url 'cotation-list-filter' %}" method="GET">
                   <div class="form-group">
                     <label>Projeto
                     <select class="form-control select2 select2-hidden-accessible" name="proj">
@@ -197,11 +135,13 @@
                 <button type="submit" class="btn btn-default float-right">Cancel</button>
               </div>
 
+            </form>
+
             </div>
           </div>
         </div>
 
-            </form>
+            
             </div>
  
       </div>

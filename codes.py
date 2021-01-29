@@ -28,14 +28,12 @@ def financial(var):
 
     result = '{}.{}'.format(middle, start)
 
-  elif len(n[0]) <= 6:
+  elif len(var[0]) <= 6:
     start = var[0][-6::]
     middle = var[0][:len(var[0])-6:]
 
     result = '{}'.format(start)
 
-
-  #result = result.replace(',','.')
   return result
 
 
